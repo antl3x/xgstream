@@ -1,0 +1,6 @@
+**/node_modules
+cjs/
+esm/
+**/*.tsbuildinfo
+pnpm-debug.log
+.secrets

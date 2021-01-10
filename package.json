@@ -1,0 +1,68 @@
+{
+  "name": "xgstream",
+  "version": "0.0.1",
+  "description": "xgStream is a Typescript library that enables algo trading and service connection with betting exchanges.",
+  "main": "cjs/index.js",
+  "module": "esm/index.mjs",
+  "files": [
+    "cjs",
+    "esm"
+  ],
+  "scripts": {
+    "test": "scripty",
+    "test:watch": "scripty",
+    "test:performance": "scripty",
+    "build": "scripty",
+    "build:watch": "scripty",
+    "prepublish": "pnpm run build && pnpm run test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nthypes/xgstream.git"
+  },
+  "keywords": [
+    "betfair",
+    "betting exchanges",
+    "betfair api",
+    "matchbook",
+    "smarkets",
+    "predictive markets",
+    "betting"
+  ],
+  "author": "Antonio Moura (nthypes)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/nthypes/xgstream/issues"
+  },
+  "homepage": "https://github.com/nthypes/xgstream#readme",
+  "devDependencies": {
+    "@ef-carbon/tspm": "^2.2.5",
+    "@types/benchmark": "^1.0.33",
+    "@types/bunyan": "^1.8.6",
+    "@types/jest": "^25.2.1",
+    "@types/node-fetch": "^2.5.7",
+    "@typescript-eslint/eslint-plugin": "^2.30.0",
+    "@typescript-eslint/parser": "^2.30.0",
+    "benchmark": "^2.1.4",
+    "dotenv": "^8.2.0",
+    "eslint": "^6.8.0",
+    "jest": "^25.5.3",
+    "nodemon": "^2.0.4",
+    "scripty": "^2.0.0",
+    "ts-jest": "^25.4.0",
+    "ts-node": "^8.10.2",
+    "tsc-watch": "^4.2.9",
+    "tslib": "^2.0.0",
+    "typescript": "^3.9.5"
+  },
+  "scripty": {
+    "silence": true
+  },
+  "dependencies": {
+    "@types/ramda": "^0.27.4",
+    "bunyan": "^1.8.15",
+    "node-fetch": "^2.6.1",
+    "ramda": "^0.27.0",
+    "super-ts": "^1.11.1"
+  }
+}
