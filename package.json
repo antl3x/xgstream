@@ -1,7 +1,7 @@
 {
   "name": "xgstream",
   "version": "0.0.1",
-  "description": "xgStream is a Typescript library that enables algo trading and service connection with betting exchanges.",
+  "description": "xgStream is a Typescript library that enables algo trading and service connection with betting exchanges like Betfair.",
   "main": "cjs/index.js",
   "module": "esm/index.mjs",
   "files": [

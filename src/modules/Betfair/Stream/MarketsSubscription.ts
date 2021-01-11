@@ -2,8 +2,11 @@ import fs from 'fs';
 import path from 'path';
 import { createMarket } from '@modules/Betfair/Market/Market';
 import { LogService } from '@shared/services/LogService';
-import { MarketsCache, StreamMessageMarketChange } from '..';
-import { MarketsSubscriptionMiddleware } from './MarketsSubscriptionMiddleware';
+import {
+  MarketsCache,
+  MarketsSubscriptionMiddleware,
+  StreamMessageMarketChange,
+} from '@modules/Betfair';
 
 export type Subscription = MarketsSubscription | OrderSubscription;
 
