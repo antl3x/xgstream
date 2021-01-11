@@ -99,6 +99,10 @@ export const createMarketsSubscription = <MiddlewareCache = {}>(
         if (!mChange.img) {
           marketsCache[marketId].updateCache (mChange);
         }
+
+        if (mChange.marketDefinition?.status === 'CLOSED') {
+          delete marketsCache[marketId];
+        }
       }
       log.info (`updated ${msg.mc.length} markets on the cache`);
     }
