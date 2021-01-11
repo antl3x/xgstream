@@ -9,12 +9,17 @@ import {
   StreamMessageMarketChange,
   StreamMessageOrderChange,
   StreamMessageRequestMarketsSubscription,
+  StreamMessageRequestOrdersSubscription,
   StreamMessageSuccess,
 } from '..';
 import {
   createMarketsSubscription,
   MarketsSubscription,
 } from './MarketsSubscription';
+import {
+  createOrdersSubscription,
+  OrdersSubscription,
+} from './OrdersSubscription';
 
 type StreamConnectionProps = {
   id?: number;
@@ -22,6 +27,7 @@ type StreamConnectionProps = {
   socketEndpoint?: keyof typeof HOSTS;
   socketTimeout?: number;
   marketsSubscription?: MarketsSubscription;
+  ordersSubscription?: OrdersSubscription;
   logLevel?: Logger.LogLevel;
 };
 
@@ -30,6 +36,9 @@ interface StreamConnection {
   account: () => Account;
   subscribeToMarkets: (
     i: Omit<StreamMessageRequestMarketsSubscription, 'op'>
+  ) => void;
+  subscribeToOrders: (
+    i: Omit<StreamMessageRequestOrdersSubscription, 'op'>
   ) => void;
 }
 
@@ -43,6 +52,7 @@ export const createStreamConnection = ({
   socketEndpoint = 'LIVE',
   socketTimeout = 5000,
   marketsSubscription = createMarketsSubscription ({}),
+  ordersSubscription = createOrdersSubscription ({}),
   ...props
 }: StreamConnectionProps): StreamConnection => {
   const log = LogService.child ({
@@ -172,9 +182,24 @@ export const createStreamConnection = ({
     log.debug (`market subscription requested`, msg);
   }
 
+  function subscribeToOrders(
+    i: Omit<StreamMessageRequestOrdersSubscription, 'op'>
+  ) {
+    const nextId = _nextId ();
+    const msg: StreamMessageRequestOrdersSubscription = {
+      ...i,
+      op: 'orderSubscription',
+      id: nextId,
+    };
+
+    socketConnection.write (`${JSON.stringify (msg)}\r\n`);
+    log.debug (`order subscription requested`, msg);
+  }
+
   return {
     id: () => id,
     account: () => props.account,
     subscribeToMarkets,
+    subscribeToOrders,
   };
 };

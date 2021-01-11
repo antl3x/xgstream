@@ -58,6 +58,11 @@ export type StreamMessageRequestMarketsSubscription = StreamMessageRequestSubscr
   marketDataFilter: MarketDataFilter;
 };
 
+export type StreamMessageRequestOrdersSubscription = StreamMessageRequestSubscription & {
+  op: 'orderSubscription';
+  orderFilter?: OrderFilter;
+};
+
 export type StreamMessageChange = {
   ct?: 'SUB_IMAGE' | 'RESUB_DELTA' | 'HEARTBEAT';
   segmentType?: 'SEG_START' | 'SEG' | 'SEG_END';
@@ -80,7 +85,7 @@ export type StreamMessageMarketChange = StreamMessageChange & {
   }[];
 };
 
-export type StreamMessageOrderChange = {
+export type StreamMessageOrderChange = StreamMessageChange & {
   op: 'ocm';
 };
 
@@ -152,6 +157,12 @@ export type MarketDefinition = {
   };
 };
 
+export type OrderFilter = {
+  includeOverallPosition?: boolean;
+  customerStrategyRefs?: string[];
+  partitionMatchedByStrategyRef?: boolean;
+};
+
 export type MarketFilter = {
   marketIds?: string[];
   bspMarket?: boolean;
@@ -182,6 +193,10 @@ export type MarketDataFilter = {
 
 export interface MarketsCache {
   [marketId: string]: Market;
+}
+
+export interface OrdersCache {
+  [marketId: string]: undefined;
 }
 
 export interface MarketsSubscriptionMiddleware<MiddlewareCache> {
@@ -217,6 +232,44 @@ export interface MarketsSubscriptionMiddleware<MiddlewareCache> {
 
   afterHeartbeatReceived?: (i: {
     marketsCache: MarketsCache;
+    middlewareCache: MiddlewareCache;
+    mChange: StreamMessageMarketChange;
+  }) => MiddlewareCache;
+}
+
+export interface OrdersSubscriptionMiddleware<MiddlewareCache> {
+  beforeSubImageReceived?: (i: {
+    ordersCache: OrdersCache;
+    middlewareCache: MiddlewareCache;
+    mChange: StreamMessageMarketChange;
+  }) => MiddlewareCache;
+
+  afterSubImageReceived?: (i: {
+    ordersCache: OrdersCache;
+    middlewareCache: MiddlewareCache;
+    mChange: StreamMessageMarketChange;
+  }) => MiddlewareCache;
+
+  beforeReSubImageReceived?: (i: {
+    ordersCache: OrdersCache;
+    middlewareCache: MiddlewareCache;
+    mChange: StreamMessageMarketChange;
+  }) => MiddlewareCache;
+
+  afterReSubImageReceived?: (i: {
+    ordersCache: OrdersCache;
+    middlewareCache: MiddlewareCache;
+    mChange: StreamMessageMarketChange;
+  }) => MiddlewareCache;
+
+  beforeHeartbeatReceived?: (i: {
+    ordersCache: OrdersCache;
+    middlewareCache: MiddlewareCache;
+    mChange: StreamMessageMarketChange;
+  }) => MiddlewareCache;
+
+  afterHeartbeatReceived?: (i: {
+    ordersCache: OrdersCache;
     middlewareCache: MiddlewareCache;
     mChange: StreamMessageMarketChange;
   }) => MiddlewareCache;

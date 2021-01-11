@@ -31,26 +31,29 @@ async function init() {
   const streamConnection = createStreamConnection ({
     account: betfairAccount,
     marketsSubscription: marketsSub,
+    logLevel: 'debug',
   });
 
-  streamConnection.subscribeToMarkets ({
-    marketFilter: {
-      eventTypeIds: ['7'],
-    },
-    marketDataFilter: {
-      fields: [
-        'EX_BEST_OFFERS_DISP',
-        'EX_BEST_OFFERS',
-        'EX_ALL_OFFERS',
-        'EX_MARKET_DEF',
-        'EX_TRADED',
-        'EX_TRADED_VOL',
-        'EX_LTP',
-        'SP_PROJECTED',
-      ],
-      ladderLevels: 10,
-    },
-  });
+  streamConnection.subscribeToOrders ({});
+
+  // streamConnection.subscribeToMarkets ({
+  //   marketFilter: {
+  //     eventTypeIds: ['7'],
+  //   },
+  //   marketDataFilter: {
+  //     fields: [
+  //       'EX_BEST_OFFERS_DISP',
+  //       'EX_BEST_OFFERS',
+  //       'EX_ALL_OFFERS',
+  //       'EX_MARKET_DEF',
+  //       'EX_TRADED',
+  //       'EX_TRADED_VOL',
+  //       'EX_LTP',
+  //       'SP_PROJECTED',
+  //     ],
+  //     ladderLevels: 10,
+  //   },
+  // });
 }
 
 process.on ('unhandledRejection', (up) => {
