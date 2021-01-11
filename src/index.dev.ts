@@ -4,7 +4,7 @@
  */
 
 import { createAccount } from '@modules/Betfair/Account/Account';
-import { createConnectionStream } from '@modules/Betfair/Stream/ConnectionStream';
+import { createStreamConnection } from '@modules/Betfair/Stream/StreamConnection';
 import { createMarketsSubscription } from '@modules/Betfair/Stream/MarketsSubscription';
 import dotenv from 'dotenv';
 import path from 'path';
@@ -28,7 +28,7 @@ async function init() {
     },
   });
 
-  const streamConnection = createConnectionStream ({
+  const streamConnection = createStreamConnection ({
     account: betfairAccount,
     marketsSubscription: marketsSub,
   });

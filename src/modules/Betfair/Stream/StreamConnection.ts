@@ -38,7 +38,7 @@ const HOSTS = {
   INTEGRATION: 'stream-api-integration.betfair.com',
 };
 
-export const createConnectionStream = ({
+export const createStreamConnection = ({
   id = 0,
   socketEndpoint = 'LIVE',
   socketTimeout = 5000,
