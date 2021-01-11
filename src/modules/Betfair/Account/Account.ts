@@ -24,8 +24,14 @@ export const createAccount = (props: AccountProps): Promise<Account> => {
   let sessionToken = '';
 
   function _init() {
-    const CERT_FILE = path.join (__dirname, props.certificateFilesPath.certPath);
-    const KEY_FILE = path.join (__dirname, props.certificateFilesPath.keyPath);
+    const CERT_FILE = path.resolve (
+      process.cwd (),
+      props.certificateFilesPath.certPath
+    );
+    const KEY_FILE = path.resolve (
+      process.cwd (),
+      props.certificateFilesPath.keyPath
+    );
 
     const certFile = fs.promises.readFile (CERT_FILE);
     const keyFile = fs.promises.readFile (KEY_FILE);

@@ -9,6 +9,7 @@
     "esm"
   ],
   "scripts": {
+    "dev": "scripty",
     "test": "scripty",
     "test:watch": "scripty",
     "test:performance": "scripty",

@@ -1,30 +1,36 @@
-import tls from 'tls';
 import { Account } from '@modules/Betfair/Account/Account';
 import { LogService } from '@shared/services/LogService';
+import Logger from 'bunyan';
+import tls from 'tls';
 import {
-  MarketDataFilter,
-  MarketFilter,
   StreamMessage,
   StreamMessageConnection,
   StreamMessageFailure,
   StreamMessageMarketChange,
   StreamMessageOrderChange,
-  StreamMessageRequestMarketSubscription,
+  StreamMessageRequestMarketsSubscription,
   StreamMessageSuccess,
-} from '.';
-import { MarketSubscription } from './MarketSubscription';
+} from '..';
+import {
+  createMarketsSubscription,
+  MarketsSubscription,
+} from './MarketsSubscription';
 
 type StreamConnectionProps = {
   id?: number;
   account: Account;
   socketEndpoint?: keyof typeof HOSTS;
   socketTimeout?: number;
+  marketsSubscription?: MarketsSubscription;
+  logLevel?: Logger.LogLevel;
 };
 
 interface StreamConnection {
   id: () => number;
   account: () => Account;
-  subscribeToMarkets: (i: StreamMessageRequestMarketSubscription) => void;
+  subscribeToMarkets: (
+    i: Omit<StreamMessageRequestMarketsSubscription, 'op'>
+  ) => void;
 }
 
 const HOSTS = {
@@ -32,13 +38,17 @@ const HOSTS = {
   INTEGRATION: 'stream-api-integration.betfair.com',
 };
 
-export const StreamConnection = ({
+export const createConnectionStream = ({
   id = 0,
   socketEndpoint = 'LIVE',
   socketTimeout = 5000,
+  marketsSubscription = createMarketsSubscription ({}),
   ...props
 }: StreamConnectionProps): StreamConnection => {
-  const log = LogService.child ({ module: 'Betfair', sub: 'StreamConnection' });
+  const log = LogService.child ({
+    module: 'Betfair',
+    sub: 'StreamConnection',
+  });
   let socketBuffer = '';
   let connectionId;
   let isConnectionClosed: boolean;
@@ -46,7 +56,6 @@ export const StreamConnection = ({
   let socketConnection: tls.TLSSocket;
   let lastMessageReceivedAt: Date;
   let messagesReceivedCount: number;
-  let marketSubscription: MarketSubscription;
 
   _init ();
 
@@ -54,6 +63,10 @@ export const StreamConnection = ({
     _createSocketConnection ();
     _authenticateSocketConnection ();
     _listenSocketConnection ();
+
+    if (props.logLevel) {
+      log.addStream ({ stream: process.stdout, level: props.logLevel });
+    }
   }
 
   function _createSocketConnection() {
@@ -134,6 +147,7 @@ export const StreamConnection = ({
 
   function _onMarketChangeMessage(msg: StreamMessageMarketChange) {
     log.debug (`market change message received`, msg);
+    marketsSubscription.onMarketChangeMessage (msg);
   }
 
   function _onOrderChangeMessage(msg: StreamMessageOrderChange) {
@@ -144,9 +158,11 @@ export const StreamConnection = ({
     return id + 1;
   }
 
-  function subscribeToMarkets(i: StreamMessageRequestMarketSubscription) {
+  function subscribeToMarkets(
+    i: Omit<StreamMessageRequestMarketsSubscription, 'op'>
+  ) {
     const nextId = _nextId ();
-    const msg = {
+    const msg: StreamMessageRequestMarketsSubscription = {
       ...i,
       op: 'marketSubscription',
       id: nextId,

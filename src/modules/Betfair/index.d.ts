@@ -1,3 +1,5 @@
+import { Market } from './Market/Market';
+
 export type StreamMessage =
   | StreamMessageFailure
   | StreamMessageSuccess
@@ -42,6 +44,7 @@ export type StreamMessageSuccess = {
 };
 
 export type StreamMessageRequestSubscription = {
+  id?: number;
   segmentationEnabled?: boolean;
   conflateMs?: number;
   heartbeatMs?: number;
@@ -49,7 +52,7 @@ export type StreamMessageRequestSubscription = {
   clk?: string;
 };
 
-export type StreamMessageRequestMarketSubscription = StreamMessageRequestSubscription & {
+export type StreamMessageRequestMarketsSubscription = StreamMessageRequestSubscription & {
   op: 'marketSubscription';
   marketFilter: MarketFilter;
   marketDataFilter: MarketDataFilter;
@@ -72,77 +75,81 @@ export type StreamMessageMarketChange = StreamMessageChange & {
     id: string;
     img?: boolean;
     tv?: number;
-    marketDefinition?: {
-      bspMarket: boolean;
-      turnInPlayEnabled: boolean;
-      persistenceEnabled: boolean;
-      marketBaseRate: number;
-      eventId: string;
-      eventTypeId: number;
-      numberOfWinners: number;
-      bettingType:
-        | 'ODDS'
-        | 'LINE'
-        | 'RANGE'
-        | 'ASIAN_HANDICAP_DOUBLE_LINE'
-        | 'ASIAN_HANDICAP_SINGLE_LINE'
-        | 'FIXED_ODDS';
-      marketType: string;
-      marketTime: string;
-      suspendTime: string;
-      bspReconciled: boolean;
-      complete: boolean;
-      inPlay: boolean;
-      crossMatching: boolean;
-      runnersVoidable: boolean;
-      numberOfActiveRunners: number;
-      betDelay: number;
-      status: 'OPEN' | 'INACTIVE' | 'SUSPENDED' | 'CLOSED';
-      runners: {
-        status:
-          | 'ACTIVE'
-          | 'WINNER'
-          | 'LOSER'
-          | 'PLACED'
-          | 'REMOVED_VACANT'
-          | 'REMOVED'
-          | 'HIDDEN';
-        sortPriority: number;
-        id: number;
-      }[];
-      regulators: string[];
-      countryCode: string;
-      venue: string;
-      discountAllowed: boolean;
-      timezone: string;
-      openDate: string;
-      version: number;
-      priceLadderDefinition: {
-        type: 'CLASSIC' | 'FINEST' | 'LINE_RANGE';
-      };
-    };
-    rc: {
-      id: number;
-      con?: boolean;
-      tv?: number;
-      ltp?: number;
-      spn?: number;
-      spf?: number;
-      batb?: [number, number, number][];
-      batl?: [number, number, number][];
-      bdatb?: [number, number, number][];
-      bdatl?: [number, number, number][];
-      atb?: [number, number][];
-      atl?: [number, number][];
-      spb?: [number, number][];
-      spl?: [number, number][];
-      trd?: [number, number][];
-    }[];
+    marketDefinition?: MarketDefinition;
+    rc: RunnerChange[];
   }[];
 };
 
 export type StreamMessageOrderChange = {
   op: 'ocm';
+};
+
+export type RunnerChange = {
+  id: number;
+  con?: boolean;
+  tv?: number;
+  ltp?: number;
+  spn?: number;
+  spf?: number;
+  batb?: [number, number, number][];
+  batl?: [number, number, number][];
+  bdatb?: [number, number, number][];
+  bdatl?: [number, number, number][];
+  atb?: [number, number][];
+  atl?: [number, number][];
+  spb?: [number, number][];
+  spl?: [number, number][];
+  trd?: [number, number][];
+};
+
+export type MarketDefinition = {
+  bspMarket: boolean;
+  turnInPlayEnabled: boolean;
+  persistenceEnabled: boolean;
+  marketBaseRate: number;
+  eventId: string;
+  eventTypeId: number;
+  numberOfWinners: number;
+  bettingType:
+    | 'ODDS'
+    | 'LINE'
+    | 'RANGE'
+    | 'ASIAN_HANDICAP_DOUBLE_LINE'
+    | 'ASIAN_HANDICAP_SINGLE_LINE'
+    | 'FIXED_ODDS';
+  marketType: string;
+  marketTime: string;
+  suspendTime: string;
+  bspReconciled: boolean;
+  complete: boolean;
+  inPlay: boolean;
+  crossMatching: boolean;
+  runnersVoidable: boolean;
+  numberOfActiveRunners: number;
+  betDelay: number;
+  status: 'OPEN' | 'INACTIVE' | 'SUSPENDED' | 'CLOSED';
+  runners: {
+    status:
+      | 'ACTIVE'
+      | 'WINNER'
+      | 'LOSER'
+      | 'PLACED'
+      | 'REMOVED_VACANT'
+      | 'REMOVED'
+      | 'HIDDEN';
+    sortPriority: number;
+    id: number;
+  }[];
+  regulators: string[];
+  countryCode: string;
+  venue: string;
+  discountAllowed: boolean;
+  timezone: string;
+  openDate: string;
+  version: number;
+  priceLadderDefinition: {
+    type: 'CLASSIC' | 'FINEST' | 'LINE_RANGE';
+  };
 };
 
 export type MarketFilter = {
@@ -172,3 +179,7 @@ export type MarketDataFilter = {
   )[];
   ladderLevels: 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10;
 };
+
+export interface MarketsCache {
+  [marketId: string]: Market;
+}
