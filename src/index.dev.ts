@@ -3,16 +3,16 @@
  * NOT PART OF THE PACKAGE DISTRIBUTION.
  */
 
-import { createAccount } from '@modules/Betfair/Account/Account';
-import { createStreamConnection } from '@modules/Betfair/Stream/StreamConnection';
+import { createAccountSession } from '@modules/Betfair/Account';
 import { createMarketsSubscription } from '@modules/Betfair/Stream/MarketsSubscription';
+import { createStreamConnection } from '@modules/Betfair/Stream/StreamConnection';
 import dotenv from 'dotenv';
 import path from 'path';
 
 async function init() {
   dotenv.config ({ path: path.resolve (process.cwd (), '.secrets/.env') });
 
-  const betfairAccount = await createAccount ({
+  const betfairAccount = await createAccountSession ({
     username: process.env.BETFAIR_USERNAME || '',
     password: process.env.BETFAIR_PASSWORD || '',
     apiKey: process.env.BETFAIR_API_KEY || '',

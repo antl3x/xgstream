@@ -91,8 +91,8 @@ export const createStreamConnection = ({
       `${JSON.stringify ({
         op: 'authentication',
         id: _nextId (),
-        appKey: props.account.apiKey (),
-        session: props.account.sessionToken (),
+        appKey: props.account.apiKey,
+        session: props.account.sessionToken,
       })}\r\n`
     );
     log.debug ('socket authentication sent');
