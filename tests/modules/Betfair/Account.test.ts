@@ -1,10 +1,7 @@
-import {
-  createAccountSession,
-  getAccountFunds,
-} from '@modules/Betfair/Account';
+import { doAuthentication, getAccountFunds } from '@module/BetfairAccount';
 
 it ('Should pass with valid account credentials', async () => {
-  const betfairAccount = await createAccountSession ({
+  const betfairAccount = await doAuthentication ({
     username: process.env.BETFAIR_USERNAME || '',
     password: process.env.BETFAIR_PASSWORD || '',
     apiKey: process.env.BETFAIR_API_KEY || '',
@@ -17,7 +14,7 @@ it ('Should pass with valid account credentials', async () => {
 });
 
 it ('Should pass with valid account credentials', async () => {
-  const betfairAccount = await createAccountSession ({
+  const betfairAccount = await doAuthentication ({
     username: process.env.BETFAIR_USERNAME || '',
     password: process.env.BETFAIR_PASSWORD || '',
     apiKey: process.env.BETFAIR_API_KEY || '',
@@ -27,7 +24,9 @@ it ('Should pass with valid account credentials', async () => {
     },
   });
 
-  const accountFunds = await getAccountFunds ({ account: betfairAccount });
+  const accountFunds = await getAccountFunds ({
+    account: betfairAccount,
+  });
 
   console.log (accountFunds);
   expect (accountFunds).toBeTruthy ();

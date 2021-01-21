@@ -1,3 +1,6 @@
+#!/bin/bash
+set -e
+
 # Build CJS Modules
 rm -rf cjs
 node_modules/.bin/tsc -p tsconfig.build.json

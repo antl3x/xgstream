@@ -4,3 +4,4 @@ esm/
 **/*.tsbuildinfo
 pnpm-debug.log
 .secrets
+data/

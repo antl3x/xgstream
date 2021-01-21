@@ -1,8 +1,8 @@
 module.exports = {
   moduleDirectories: ['<rootDir>', 'node_modules'],
   moduleNameMapper: {
-    '^@modules/(.*)$': 'src/modules/$1',
-    '^@shared/(.*)$': 'src/shared/$1',
+    '^@module/(.*)$': 'src/module/$1/public.ts',
+    '^@private/(.*)$': 'src/module/$1/private/index.ts',
   },
   globalSetup: '<rootDir>/jest.globalSetup.js',
   preset: 'ts-jest',

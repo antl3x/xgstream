@@ -17,8 +17,8 @@
     "forceConsistentCasingInFileNames": true /* Disallow inconsistently-cased references to the same file. */,
     "baseUrl": "./",
     "paths": {
-      "@modules/*": ["src/modules/*"],
-      "@shared/*": ["src/shared/*"]
+      "@module/*": ["src/module/*/public.ts"],
+      "@private/*": ["src/module/*/private/index.ts"]
     }
   },
   "include": ["src/**/*.ts"],

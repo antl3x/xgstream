@@ -3,16 +3,18 @@
  * NOT PART OF THE PACKAGE DISTRIBUTION.
  */
 
-import { createAccountSession } from '@modules/Betfair/Account';
-import { createMarketsSubscription } from '@modules/Betfair/Stream/MarketsSubscription';
-import { createStreamConnection } from '@modules/Betfair/Stream/StreamConnection';
 import dotenv from 'dotenv';
 import path from 'path';
+import {
+  createMarketsSubscription,
+  createStreamConnection,
+} from '@module/BetfairStream';
+import { doAuthentication } from '@module/BetfairAccount';
 
 async function init() {
   dotenv.config ({ path: path.resolve (process.cwd (), '.secrets/.env') });
 
-  const betfairAccount = await createAccountSession ({
+  const betfairAccount = await doAuthentication ({
     username: process.env.BETFAIR_USERNAME || '',
     password: process.env.BETFAIR_PASSWORD || '',
     apiKey: process.env.BETFAIR_API_KEY || '',
@@ -34,7 +36,25 @@ async function init() {
     logLevel: 'debug',
   });
 
-  streamConnection.subscribeToOrders ({});
+  streamConnection.subscribeToMarkets ({
+    marketFilter: {
+      marketIds: ['1.178239869'],
+    },
+    marketDataFilter: {
+      fields: [
+        'EX_ALL_OFFERS',
+        'EX_BEST_OFFERS',
+        'EX_BEST_OFFERS_DISP',
+        'EX_LTP',
+        'EX_TRADED',
+        'EX_TRADED_VOL',
+        'SP_PROJECTED',
+        'SP_TRADED',
+        'EX_MARKET_DEF',
+      ],
+      ladderLevels: 10,
+    },
+  });
 
   // streamConnection.subscribeToMarkets ({
   //   marketFilter: {
