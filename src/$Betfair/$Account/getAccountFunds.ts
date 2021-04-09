@@ -1,7 +1,7 @@
-import { Account, Wallet } from '@private/BetfairAccount';
+import { Account, Wallet } from './Account';
 import fetch from 'node-fetch';
 
-type GetAccountFundsProps = {
+type GetAccountFundsInput = {
   account: Account;
   apiEndpoint?: string;
 };
@@ -17,14 +17,14 @@ type GetAccountFundsResponse = {
 };
 
 type GetAccountFunds = (
-  props: GetAccountFundsProps
+  i: GetAccountFundsInput
 ) => Promise<GetAccountFundsResponse>;
 
-export const getAccountFunds: GetAccountFunds = (props) => {
+export const getAccountFunds: GetAccountFunds = (i) => {
   const {
     account,
     apiEndpoint = 'https://api.betfair.com/exchange/account/rest/v1.0',
-  } = props;
+  } = i;
 
   const apiRequest = fetch (apiEndpoint + '/getAccountFunds/', {
     body: JSON.stringify ({ wallet: 'UK' }),

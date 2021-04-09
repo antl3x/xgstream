@@ -5,16 +5,14 @@
 
 import dotenv from 'dotenv';
 import path from 'path';
-import {
-  createMarketsSubscription,
-  createStreamConnection,
-} from '@module/BetfairStream';
-import { doAuthentication } from '@module/BetfairAccount';
+
+import * as $Account from '$Betfair/$Account';
+import { createConnection, createMarketsSubscription } from '$Betfair/$Stream';
 
 async function init() {
   dotenv.config ({ path: path.resolve (process.cwd (), '.secrets/.env') });
 
-  const betfairAccount = await doAuthentication ({
+  const betfairAccount = await $Account.doAuthentication ({
     username: process.env.BETFAIR_USERNAME || '',
     password: process.env.BETFAIR_PASSWORD || '',
     apiKey: process.env.BETFAIR_API_KEY || '',
@@ -24,37 +22,42 @@ async function init() {
     },
   });
 
-  const marketsSub = createMarketsSubscription ({
-    enableMarketsRecording: {
-      folderPath: './data',
-    },
-  });
-
-  const streamConnection = createStreamConnection ({
+  const streamConnection = createConnection ({
     account: betfairAccount,
-    marketsSubscription: marketsSub,
-    logLevel: 'debug',
+    socketEndpoint: 'LIVE',
+    logLevel: 'info',
   });
 
-  streamConnection.subscribeToMarkets ({
-    marketFilter: {
-      marketIds: ['1.178239869'],
-    },
+  createMarketsSubscription ({
+    streamConnection,
     marketDataFilter: {
-      fields: [
-        'EX_ALL_OFFERS',
-        'EX_BEST_OFFERS',
-        'EX_BEST_OFFERS_DISP',
-        'EX_LTP',
-        'EX_TRADED',
-        'EX_TRADED_VOL',
-        'SP_PROJECTED',
-        'SP_TRADED',
-        'EX_MARKET_DEF',
-      ],
+      fields: ['EX_ALL_OFFERS'],
       ladderLevels: 10,
     },
+    marketFilter: {
+      marketIds: ['1.180960241'],
+    },
   });
+
+  // streamConnection.subscribeToMarkets ({
+  //   marketFilter: {
+  //     marketIds: ['1.178239869'],
+  //   },
+  //   marketDataFilter: {
+  //     fields: [
+  //       'EX_ALL_OFFERS',
+  //       'EX_BEST_OFFERS',
+  //       'EX_BEST_OFFERS_DISP',
+  //       'EX_LTP',
+  //       'EX_TRADED',
+  //       'EX_TRADED_VOL',
+  //       'SP_PROJECTED',
+  //       'SP_TRADED',
+  //       'EX_MARKET_DEF',
+  //     ],
+  //     ladderLevels: 10,
+  //   },
+  // });
 
   // streamConnection.subscribeToMarkets ({
   //   marketFilter: {
