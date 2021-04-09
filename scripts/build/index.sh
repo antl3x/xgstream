@@ -3,6 +3,7 @@ set -e
 
 # Build CJS Modules
 rm -rf cjs
+node_modules/.bin/ts-auto-guard src/\$Betfair/\$Stream/Message.ts
 node_modules/.bin/ttsc -p tsconfig.build.json
 rm -rf cjs/tsconfig.build.tsbuildinfo
 

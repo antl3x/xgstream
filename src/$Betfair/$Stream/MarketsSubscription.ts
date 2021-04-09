@@ -1,45 +1,120 @@
 import * as $Log from '$Log';
 import { Connection } from './Connection';
-import { Message } from './Message';
-
+import { Market } from './Market';
+import { makeMarketSubscription, MarketSubscription } from './MessageRequest';
+import { MessageResponse } from './MessageResponse';
+import * as $Guards from './MessageResponse.guard';
+import { Runner } from './Runner';
 export class MarketsSubscription {
   private _id: number;
-  private _initialClk: string;
-  private _clk: string;
-  private _conflateMs: number;
-  private _heartbeatMs: number;
-  private _messagesReceived: number;
-  private _lastPublishTime: number;
-  private _connection: Connection;
-  private _log = $Log.logChild ({
+  private _streamConnection: Connection;
+  private _marketsSubscribed: { [marketId: string]: Market } = {};
+  private _runnersSubscribed: { [runnerIdAndMarketId: string]: Runner } = {};
+
+  private _log = $Log.log.child ({
     module: 'Betfair',
-    sub: 'MarketsSubscriptions',
+    sub: 'MarketsSubscription',
   });
 
   constructor(i: {
-    id: number;
-    initialClk: string;
-    clk: string;
-    conflateMs: number;
-    heartbeatMs: number;
-    lastPublishedTime: number;
-    connection: Connection;
+    streamConnection: Connection;
+    marketFilter: MarketSubscription['marketFilter'];
+    marketDataFilter: MarketSubscription['marketDataFilter'];
   }) {
-    this._id = i.id;
-    this._initialClk = i.initialClk;
-    this._clk = i.clk;
-    this._conflateMs = i.conflateMs;
-    this._heartbeatMs = i.heartbeatMs;
-    this._lastPublishTime = i.lastPublishedTime;
-    this._messagesReceived = 1;
-    this._connection = i.connection;
-
-    this._connection.addHandler (this._onSubMessage);
+    this._id = Math.floor (Math.random () * 100 + 1);
+    this._streamConnection = i.streamConnection;
+    this._streamConnection.addHandler (this._msgHandler);
+    this._streamConnection.sendMsg (
+      makeMarketSubscription ({
+        id: this._id,
+        marketDataFilter: i.marketDataFilter,
+        marketFilter: i.marketFilter,
+      })
+    );
+    this._log.info ('markets subscription requested');
   }
 
-  private _onSubMessage(msg: Message) {
-    if (msg.op === 'mcm' && msg.id === this._id && msg.ct === 'SUB_IMAGE') {
-      this._log.debug ('market subscription sub_image received');
+  private _msgHandler(msg: MessageResponse) {
+    if ($Guards.isMarketHeartbeat (msg)) {
+      this._log.info ('markets subscription heartbeat received');
     }
+
+    if ($Guards.isMarketsChange (msg)) {
+      this._log.info ('markets changes received');
+
+      if ($Guards.isMarketSubImage (msg)) {
+        this._log.info ('markets sub images received');
+
+        for (const mChange of msg.mc) {
+          if ($Guards.isMarketDefinitionChange (mChange)) {
+            this._log.info ('market definition changed');
+          }
+
+          if ($Guards.isMarketTvChange (mChange)) {
+            this._log.info ('market tv changed');
+          }
+        }
+      }
+    }
+
+    // if ($Guards.isMarketDefinitionChange (msg)) {
+    //   this._log.info ('market definition changed');
+    // }
+
+    // if ($Guards.isMarketTvChange (msg)) {
+    //   this._log.info ('market tv changed');
+    // }
+
+    // if ($Guards.isRunnerTrdChange (msg)) {
+    //   this._log.info ('runner trd changed');
+    // }
+
+    // if ($Guards.isRunnerLtpChange (msg)) {
+    //   this._log.info ('runner ltp changed');
+    // }
+
+    // if ($Guards.isRunnerTvChange (msg)) {
+    //   this._log.info ('runner tv changed');
+    // }
+
+    // if ($Guards.isRunnerSpbChange (msg)) {
+    //   this._log.info ('runner spb changed');
+    // }
+
+    // if ($Guards.isRunnerSplChange (msg)) {
+    //   this._log.info ('runner spl changed');
+    // }
+
+    // if ($Guards.isRunnerSpnChange (msg)) {
+    //   this._log.info ('runner spn changed');
+    // }
+
+    // if ($Guards.isRunnerSpfChange (msg)) {
+    //   this._log.info ('runner spf changed');
+    // }
+
+    // if ($Guards.isRunnerAtbChange (msg)) {
+    //   this._log.info ('runner atb changed');
+    // }
+
+    // if ($Guards.isRunnerAtlChange (msg)) {
+    //   this._log.info ('runner atl changed');
+    // }
+
+    // if ($Guards.isRunnerBatbChange (msg)) {
+    //   this._log.info ('runner batb changed');
+    // }
+
+    // if ($Guards.isRunnerBatlChange (msg)) {
+    //   this._log.info ('runner batl changed');
+    // }
+
+    // if ($Guards.isRunnerBdatbChange (msg)) {
+    //   this._log.info ('runner bdatb changed');
+    // }
+
+    // if ($Guards.isRunnerBdatlChange (msg)) {
+    //   this._log.info ('runner bdatl changed');
+    // }
   }
 }

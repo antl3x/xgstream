@@ -2,25 +2,22 @@ import { Account } from '$Betfair/$Account';
 import * as $Log from '$Log';
 import Logger from 'bunyan';
 import tls from 'tls';
-import {
-  MessageRequest,
-  makeRequestAuthentication,
-  MessageResponse,
-  $Guards,
-} from './Message';
 
+import { makeAuthentication, MessageRequest } from './MessageRequest';
+import { MessageResponse } from './MessageResponse';
+import * as $Guards from './MessageResponse.guard';
 export class Connection {
   private _id: number;
   private _account: Account;
   private _socketConnection: tls.TLSSocket;
-  private _socketConnectionId = '';
-  private _socketBuffer = '';
   private _socketEndpoint: string;
   private _socketTimeout: number;
   private _msgHandlers: ((msg: MessageResponse) => void)[] = [];
+  private _socketConnectionId = '';
+  private _socketBuffer = '';
   private _isConnectionClosed = true;
   private _connectionsAvailable = 0;
-  private _log = $Log.logChild ({
+  private _log = $Log.log.child ({
     module: 'Betfair',
     sub: 'Connection',
   });
@@ -38,8 +35,6 @@ export class Connection {
       LIVE: 'stream-api.betfair.com',
       INTEGRATION: 'stream-api-integration.betfair.com',
     }[i.socketEndpoint];
-
-    this._log.addStream ({ stream: process.stdout, level: i.logLevel });
 
     this.addHandler (this._msgHandler);
 
@@ -78,7 +73,7 @@ export class Connection {
 
   private _doAuthentication() {
     this.sendMsg (
-      makeRequestAuthentication ({
+      makeAuthentication ({
         id: this._id,
         session: this._account.sessionToken,
         appKey: this._account.apiKey,
@@ -89,14 +84,20 @@ export class Connection {
   }
 
   private _msgHandler(msg: MessageResponse) {
-    if ($Guards.isResponseConnectionSuccess (msg)) {
+    if ($Guards.isConnectionSuccess (msg)) {
       this._socketConnectionId = msg.connectionId;
       this._log.info (`connection suceeded`);
     }
 
-    if ($Guards.isResponseConnectionFailure (msg)) {
+    if ($Guards.isConnectionFailure (msg)) {
       this._isConnectionClosed = msg.connectionClosed;
-      this._log.error (`failure message received`);
+      this._log.error (`failure message received`, msg);
+    }
+
+    if ($Guards.isAuthenticationSuccess (msg)) {
+      this._connectionsAvailable = msg.connectionsAvailable;
+      this._isConnectionClosed = msg.connectionClosed;
+      this._log.info (`authentication suceeded`);
     }
   }
 

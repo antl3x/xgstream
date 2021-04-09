@@ -31,11 +31,11 @@ async function init() {
   createMarketsSubscription ({
     streamConnection,
     marketDataFilter: {
-      fields: ['EX_ALL_OFFERS'],
+      fields: ['EX_MARKET_DEF'],
       ladderLevels: 10,
     },
     marketFilter: {
-      marketIds: ['1.180960241'],
+      marketIds: ['1.181704829'],
     },
   });
 
