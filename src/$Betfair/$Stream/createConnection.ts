@@ -1,6 +1,7 @@
 import { Account } from '$Betfair/$Account';
 import Logger from 'bunyan';
 import { Connection } from './Connection';
+import * as $Log from '$Log';
 
 type ConnectionInput = {
   id?: number;
@@ -11,6 +12,7 @@ type ConnectionInput = {
 };
 
 export const createConnection = (i: ConnectionInput): Connection => {
+  if (i.logLevel) $Log.log.level ('fatal');
   return new Connection ({
     account: i.account,
     logLevel: i.logLevel || 'info',

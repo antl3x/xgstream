@@ -36,7 +36,7 @@ export class Connection {
       INTEGRATION: 'stream-api-integration.betfair.com',
     }[i.socketEndpoint];
 
-    this.addHandler (this._msgHandler);
+    this.addHandler (this._msgHandler.bind (this));
 
     this._socketConnection = this._startConnection ();
     this._listenMessages ();
@@ -64,7 +64,7 @@ export class Connection {
 
       if (isStreamEndMessage) {
         for (const msg of messagesToProccess) {
-          this._msgHandlers.forEach ((fn) => fn.bind (this) (JSON.parse (msg)));
+          this._msgHandlers.forEach ((fn) => fn (JSON.parse (msg)));
         }
         this._socketBuffer = '';
       }

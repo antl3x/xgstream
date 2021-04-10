@@ -25,17 +25,17 @@ async function init() {
   const streamConnection = createConnection ({
     account: betfairAccount,
     socketEndpoint: 'LIVE',
-    logLevel: 'info',
+    logLevel: 'error',
   });
 
   createMarketsSubscription ({
     streamConnection,
     marketDataFilter: {
-      fields: ['EX_MARKET_DEF'],
+      fields: [],
       ladderLevels: 10,
     },
     marketFilter: {
-      marketIds: ['1.181704829'],
+      marketIds: ['1.181732429'],
     },
   });
 

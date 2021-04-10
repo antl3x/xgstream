@@ -118,149 +118,6 @@ export type MarketReSubImage = {
 };
 
 /**
- * @see {isRunnerAtbChange} ts-auto-guard:type-guard
- */
-export type RunnerAtbChange = {
-  op: 'mcm';
-  id: number;
-  clk: string;
-  pt: number;
-  mc: { id: string; rc: { atb: [number, number][] }[] }[];
-};
-
-/**
- * @see {isRunnerAtlChange} ts-auto-guard:type-guard
- */
-export type RunnerAtlChange = {
-  op: 'mcm';
-  id: number;
-  clk: string;
-  pt: number;
-  mc: { id: string; rc: { atl: [number, number][] }[] }[];
-};
-
-/**
- * @see {isRunnerBatbChange} ts-auto-guard:type-guard
- */
-export type RunnerBatbChange = {
-  op: 'mcm';
-  id: number;
-  clk: string;
-  pt: number;
-  mc: { id: string; rc: { batb: [number, number][] }[] }[];
-};
-
-/**
- * @see {isRunnerBatlChange} ts-auto-guard:type-guard
- */
-export type RunnerBatlChange = {
-  op: 'mcm';
-  id: number;
-  clk: string;
-  pt: number;
-  mc: { id: string; rc: { batl: [number, number][] }[] }[];
-};
-
-/**
- * @see {isRunnerBdatbChange} ts-auto-guard:type-guard
- */
-export type RunnerBdatbChange = {
-  op: 'mcm';
-  id: number;
-  clk: string;
-  pt: number;
-  mc: { id: string; rc: { bdatb: [number, number][] }[] }[];
-};
-
-/**
- * @see {isRunnerBdatlChange} ts-auto-guard:type-guard
- */
-export type RunnerBdatlChange = {
-  op: 'mcm';
-  id: number;
-  clk: string;
-  pt: number;
-  mc: { id: string; rc: { bdatl: [number, number][] }[] }[];
-};
-
-/**
- * @see {isRunnerTrdChange} ts-auto-guard:type-guard
- */
-export type RunnerTrdChange = {
-  op: 'mcm';
-  id: number;
-  clk: string;
-  pt: number;
-  mc: { id: string; rc: { trd: [number, number][] }[] }[];
-};
-
-/**
- * @see {isRunnerTvChange} ts-auto-guard:type-guard
- */
-export type RunnerTvChange = {
-  op: 'mcm';
-  id: number;
-  clk: string;
-  pt: number;
-  mc: { id: string; rc: { tv: number }[] }[];
-};
-
-/**
- * @see {isRunnerLtpChange} ts-auto-guard:type-guard
- */
-export type RunnerLtpChange = {
-  op: 'mcm';
-  id: number;
-  clk: string;
-  pt: number;
-  mc: { id: string; rc: { ltp: number }[] }[];
-};
-
-/**
- * @see {isRunnerSpbChange} ts-auto-guard:type-guard
- */
-export type RunnerSpbChange = {
-  op: 'mcm';
-  id: number;
-  clk: string;
-  pt: number;
-  mc: { id: string; rc: { spb: [number, number][] }[] }[];
-};
-
-/**
- * @see {isRunnerSplChange} ts-auto-guard:type-guard
- */
-export type RunnerSplChange = {
-  op: 'mcm';
-  id: number;
-  clk: string;
-  pt: number;
-  mc: { id: string; rc: { spl: [number, number][] }[] }[];
-};
-
-/**
- * @see {isRunnerSpnChange} ts-auto-guard:type-guard
- */
-export type RunnerSpnChange = {
-  op: 'mcm';
-  id: number;
-  clk: string;
-  pt: number;
-  mc: { id: string; rc: { spn: number }[] }[];
-};
-
-/**
- * @see {isRunnerSpfChange} ts-auto-guard:type-guard
- */
-export type RunnerSpfChange = {
-  op: 'mcm';
-  id: number;
-  clk: string;
-  pt: number;
-  mc: { id: string; rc: { spf: number }[] }[];
-};
-
-/**
  * @see {isMarketTvChange} ts-auto-guard:type-guard
  */
 export type MarketTvChange = {
@@ -305,6 +162,7 @@ export type MarketDefinitionChange = {
       adjustmentFactor?: number;
       sortPriority: number;
       removalDate?: string;
+      bsp?: number;
       id: number;
     }[];
     regulators: string[];
@@ -329,5 +187,116 @@ export type MarketsChange = {
   id: number;
   clk: string;
   pt: number;
-  mc: any[];
+  mc: { id: string }[];
+};
+
+/**
+ * @see {isRunnersChange} ts-auto-guard:type-guard
+ */
+export type RunnersChange = {
+  rc: any[];
+};
+
+/**
+ * @see {isRunnerAtbChange} ts-auto-guard:type-guard
+ */
+export type RunnerAtbChange = {
+  id: number;
+  atb: [number, number][];
+};
+
+/**
+ * @see {isRunnerAtlChange} ts-auto-guard:type-guard
+ */
+export type RunnerAtlChange = {
+  id: number;
+  atl: [number, number][];
+};
+
+/**
+ * @see {isRunnerBatbChange} ts-auto-guard:type-guard
+ */
+export type RunnerBatbChange = {
+  id: number;
+  batb: [number, number, number][];
+};
+
+/**
+ * @see {isRunnerBatlChange} ts-auto-guard:type-guard
+ */
+export type RunnerBatlChange = {
+  id: number;
+  batl: [number, number, number][];
+};
+
+/**
+ * @see {isRunnerBdatbChange} ts-auto-guard:type-guard
+ */
+export type RunnerBdatbChange = {
+  id: number;
+  bdatb: [number, number, number][];
+};
+
+/**
+ * @see {isRunnerBdatlChange} ts-auto-guard:type-guard
+ */
+export type RunnerBdatlChange = {
+  id: number;
+  bdatl: [number, number, number][];
+};
+
+/**
+ * @see {isRunnerTrdChange} ts-auto-guard:type-guard
+ */
+export type RunnerTrdChange = {
+  id: number;
+  trd: [number, number][];
+};
+
+/**
+ * @see {isRunnerTvChange} ts-auto-guard:type-guard
+ */
+export type RunnerTvChange = {
+  id: number;
+  tv: number;
+};
+
+/**
+ * @see {isRunnerLtpChange} ts-auto-guard:type-guard
+ */
+export type RunnerLtpChange = {
+  id: number;
+  ltp: number;
+};
+
+/**
+ * @see {isRunnerSpbChange} ts-auto-guard:type-guard
+ */
+export type RunnerSpbChange = {
+  id: number;
+  spb: [number, number][];
+};
+
+/**
+ * @see {isRunnerSplChange} ts-auto-guard:type-guard
+ */
+export type RunnerSplChange = {
+  id: number;
+  spl: [number, number][];
+};
+
+/**
+ * @see {isRunnerSpnChange} ts-auto-guard:type-guard
+ */
+export type RunnerSpnChange = {
+  id: number;
+  spn: number;
+};
+
+/**
+ * @see {isRunnerSpfChange} ts-auto-guard:type-guard
+ */
+export type RunnerSpfChange = {
+  id: number;
+  spf: number;
 };

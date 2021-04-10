@@ -2,7 +2,7 @@
  * Generated type guards for "MessageResponse.ts".
  * WARNING: Do not manually change this file.
  */
-import { ConnectionSuccess, ConnectionFailure, AuthenticationSuccess, MarketHeartbeat, MarketLatency, MarketSubImage, MarketReSubImage, RunnerAtbChange, RunnerAtlChange, RunnerBatbChange, RunnerBatlChange, RunnerBdatbChange, RunnerBdatlChange, RunnerTrdChange, RunnerTvChange, RunnerLtpChange, RunnerSpbChange, RunnerSplChange, RunnerSpnChange, RunnerSpfChange, MarketTvChange, MarketDefinitionChange, MarketsChange } from "./MessageResponse";
+import { ConnectionSuccess, ConnectionFailure, AuthenticationSuccess, MarketHeartbeat, MarketLatency, MarketSubImage, MarketReSubImage, MarketTvChange, MarketDefinitionChange, MarketsChange, RunnersChange, RunnerAtbChange, RunnerAtlChange, RunnerBatbChange, RunnerBatlChange, RunnerBdatbChange, RunnerBdatlChange, RunnerTrdChange, RunnerTvChange, RunnerLtpChange, RunnerSpbChange, RunnerSplChange, RunnerSpnChange, RunnerSpfChange } from "./MessageResponse";
 
 export function isConnectionSuccess(obj: any, _argumentName?: string): obj is ConnectionSuccess {
     return (
@@ -108,371 +108,6 @@ export function isMarketReSubImage(obj: any, _argumentName?: string): obj is Mar
     )
 }
 
-export function isRunnerAtbChange(obj: any, _argumentName?: string): obj is RunnerAtbChange {
-    return (
-        (obj !== null &&
-            typeof obj === "object" ||
-            typeof obj === "function") &&
-        obj.op === "mcm" &&
-        typeof obj.id === "number" &&
-        typeof obj.clk === "string" &&
-        typeof obj.pt === "number" &&
-        Array.isArray(obj.mc) &&
-        obj.mc.every((e: any) =>
-            (e !== null &&
-                typeof e === "object" ||
-                typeof e === "function") &&
-            typeof e.id === "string" &&
-            Array.isArray(e.rc) &&
-            e.rc.every((e: any) =>
-                (e !== null &&
-                    typeof e === "object" ||
-                    typeof e === "function") &&
-                Array.isArray(e.atb) &&
-                e.atb.every((e: any) =>
-                    typeof e === "object"
-                )
-            )
-        )
-    )
-}
-
-export function isRunnerAtlChange(obj: any, _argumentName?: string): obj is RunnerAtlChange {
-    return (
-        (obj !== null &&
-            typeof obj === "object" ||
-            typeof obj === "function") &&
-        obj.op === "mcm" &&
-        typeof obj.id === "number" &&
-        typeof obj.clk === "string" &&
-        typeof obj.pt === "number" &&
-        Array.isArray(obj.mc) &&
-        obj.mc.every((e: any) =>
-            (e !== null &&
-                typeof e === "object" ||
-                typeof e === "function") &&
-            typeof e.id === "string" &&
-            Array.isArray(e.rc) &&
-            e.rc.every((e: any) =>
-                (e !== null &&
-                    typeof e === "object" ||
-                    typeof e === "function") &&
-                Array.isArray(e.atl) &&
-                e.atl.every((e: any) =>
-                    typeof e === "object"
-                )
-            )
-        )
-    )
-}
-
-export function isRunnerBatbChange(obj: any, _argumentName?: string): obj is RunnerBatbChange {
-    return (
-        (obj !== null &&
-            typeof obj === "object" ||
-            typeof obj === "function") &&
-        obj.op === "mcm" &&
-        typeof obj.id === "number" &&
-        typeof obj.clk === "string" &&
-        typeof obj.pt === "number" &&
-        Array.isArray(obj.mc) &&
-        obj.mc.every((e: any) =>
-            (e !== null &&
-                typeof e === "object" ||
-                typeof e === "function") &&
-            typeof e.id === "string" &&
-            Array.isArray(e.rc) &&
-            e.rc.every((e: any) =>
-                (e !== null &&
-                    typeof e === "object" ||
-                    typeof e === "function") &&
-                Array.isArray(e.batb) &&
-                e.batb.every((e: any) =>
-                    typeof e === "object"
-                )
-            )
-        )
-    )
-}
-
-export function isRunnerBatlChange(obj: any, _argumentName?: string): obj is RunnerBatlChange {
-    return (
-        (obj !== null &&
-            typeof obj === "object" ||
-            typeof obj === "function") &&
-        obj.op === "mcm" &&
-        typeof obj.id === "number" &&
-        typeof obj.clk === "string" &&
-        typeof obj.pt === "number" &&
-        Array.isArray(obj.mc) &&
-        obj.mc.every((e: any) =>
-            (e !== null &&
-                typeof e === "object" ||
-                typeof e === "function") &&
-            typeof e.id === "string" &&
-            Array.isArray(e.rc) &&
-            e.rc.every((e: any) =>
-                (e !== null &&
-                    typeof e === "object" ||
-                    typeof e === "function") &&
-                Array.isArray(e.batl) &&
-                e.batl.every((e: any) =>
-                    typeof e === "object"
-                )
-            )
-        )
-    )
-}
-
-export function isRunnerBdatbChange(obj: any, _argumentName?: string): obj is RunnerBdatbChange {
-    return (
-        (obj !== null &&
-            typeof obj === "object" ||
-            typeof obj === "function") &&
-        obj.op === "mcm" &&
-        typeof obj.id === "number" &&
-        typeof obj.clk === "string" &&
-        typeof obj.pt === "number" &&
-        Array.isArray(obj.mc) &&
-        obj.mc.every((e: any) =>
-            (e !== null &&
-                typeof e === "object" ||
-                typeof e === "function") &&
-            typeof e.id === "string" &&
-            Array.isArray(e.rc) &&
-            e.rc.every((e: any) =>
-                (e !== null &&
-                    typeof e === "object" ||
-                    typeof e === "function") &&
-                Array.isArray(e.bdatb) &&
-                e.bdatb.every((e: any) =>
-                    typeof e === "object"
-                )
-            )
-        )
-    )
-}
-
-export function isRunnerBdatlChange(obj: any, _argumentName?: string): obj is RunnerBdatlChange {
-    return (
-        (obj !== null &&
-            typeof obj === "object" ||
-            typeof obj === "function") &&
-        obj.op === "mcm" &&
-        typeof obj.id === "number" &&
-        typeof obj.clk === "string" &&
-        typeof obj.pt === "number" &&
-        Array.isArray(obj.mc) &&
-        obj.mc.every((e: any) =>
-            (e !== null &&
-                typeof e === "object" ||
-                typeof e === "function") &&
-            typeof e.id === "string" &&
-            Array.isArray(e.rc) &&
-            e.rc.every((e: any) =>
-                (e !== null &&
-                    typeof e === "object" ||
-                    typeof e === "function") &&
-                Array.isArray(e.bdatl) &&
-                e.bdatl.every((e: any) =>
-                    typeof e === "object"
-                )
-            )
-        )
-    )
-}
-
-export function isRunnerTrdChange(obj: any, _argumentName?: string): obj is RunnerTrdChange {
-    return (
-        (obj !== null &&
-            typeof obj === "object" ||
-            typeof obj === "function") &&
-        obj.op === "mcm" &&
-        typeof obj.id === "number" &&
-        typeof obj.clk === "string" &&
-        typeof obj.pt === "number" &&
-        Array.isArray(obj.mc) &&
-        obj.mc.every((e: any) =>
-            (e !== null &&
-                typeof e === "object" ||
-                typeof e === "function") &&
-            typeof e.id === "string" &&
-            Array.isArray(e.rc) &&
-            e.rc.every((e: any) =>
-                (e !== null &&
-                    typeof e === "object" ||
-                    typeof e === "function") &&
-                Array.isArray(e.trd) &&
-                e.trd.every((e: any) =>
-                    typeof e === "object"
-                )
-            )
-        )
-    )
-}
-
-export function isRunnerTvChange(obj: any, _argumentName?: string): obj is RunnerTvChange {
-    return (
-        (obj !== null &&
-            typeof obj === "object" ||
-            typeof obj === "function") &&
-        obj.op === "mcm" &&
-        typeof obj.id === "number" &&
-        typeof obj.clk === "string" &&
-        typeof obj.pt === "number" &&
-        Array.isArray(obj.mc) &&
-        obj.mc.every((e: any) =>
-            (e !== null &&
-                typeof e === "object" ||
-                typeof e === "function") &&
-            typeof e.id === "string" &&
-            Array.isArray(e.rc) &&
-            e.rc.every((e: any) =>
-                (e !== null &&
-                    typeof e === "object" ||
-                    typeof e === "function") &&
-                typeof e.tv === "number"
-            )
-        )
-    )
-}
-
-export function isRunnerLtpChange(obj: any, _argumentName?: string): obj is RunnerLtpChange {
-    return (
-        (obj !== null &&
-            typeof obj === "object" ||
-            typeof obj === "function") &&
-        obj.op === "mcm" &&
-        typeof obj.id === "number" &&
-        typeof obj.clk === "string" &&
-        typeof obj.pt === "number" &&
-        Array.isArray(obj.mc) &&
-        obj.mc.every((e: any) =>
-            (e !== null &&
-                typeof e === "object" ||
-                typeof e === "function") &&
-            typeof e.id === "string" &&
-            Array.isArray(e.rc) &&
-            e.rc.every((e: any) =>
-                (e !== null &&
-                    typeof e === "object" ||
-                    typeof e === "function") &&
-                typeof e.ltp === "number"
-            )
-        )
-    )
-}
-
-export function isRunnerSpbChange(obj: any, _argumentName?: string): obj is RunnerSpbChange {
-    return (
-        (obj !== null &&
-            typeof obj === "object" ||
-            typeof obj === "function") &&
-        obj.op === "mcm" &&
-        typeof obj.id === "number" &&
-        typeof obj.clk === "string" &&
-        typeof obj.pt === "number" &&
-        Array.isArray(obj.mc) &&
-        obj.mc.every((e: any) =>
-            (e !== null &&
-                typeof e === "object" ||
-                typeof e === "function") &&
-            typeof e.id === "string" &&
-            Array.isArray(e.rc) &&
-            e.rc.every((e: any) =>
-                (e !== null &&
-                    typeof e === "object" ||
-                    typeof e === "function") &&
-                Array.isArray(e.spb) &&
-                e.spb.every((e: any) =>
-                    typeof e === "object"
-                )
-            )
-        )
-    )
-}
-
-export function isRunnerSplChange(obj: any, _argumentName?: string): obj is RunnerSplChange {
-    return (
-        (obj !== null &&
-            typeof obj === "object" ||
-            typeof obj === "function") &&
-        obj.op === "mcm" &&
-        typeof obj.id === "number" &&
-        typeof obj.clk === "string" &&
-        typeof obj.pt === "number" &&
-        Array.isArray(obj.mc) &&
-        obj.mc.every((e: any) =>
-            (e !== null &&
-                typeof e === "object" ||
-                typeof e === "function") &&
-            typeof e.id === "string" &&
-            Array.isArray(e.rc) &&
-            e.rc.every((e: any) =>
-                (e !== null &&
-                    typeof e === "object" ||
-                    typeof e === "function") &&
-                Array.isArray(e.spl) &&
-                e.spl.every((e: any) =>
-                    typeof e === "object"
-                )
-            )
-        )
-    )
-}
-
-export function isRunnerSpnChange(obj: any, _argumentName?: string): obj is RunnerSpnChange {
-    return (
-        (obj !== null &&
-            typeof obj === "object" ||
-            typeof obj === "function") &&
-        obj.op === "mcm" &&
-        typeof obj.id === "number" &&
-        typeof obj.clk === "string" &&
-        typeof obj.pt === "number" &&
-        Array.isArray(obj.mc) &&
-        obj.mc.every((e: any) =>
-            (e !== null &&
-                typeof e === "object" ||
-                typeof e === "function") &&
-            typeof e.id === "string" &&
-            Array.isArray(e.rc) &&
-            e.rc.every((e: any) =>
-                (e !== null &&
-                    typeof e === "object" ||
-                    typeof e === "function") &&
-                typeof e.spn === "number"
-            )
-        )
-    )
-}
-
-export function isRunnerSpfChange(obj: any, _argumentName?: string): obj is RunnerSpfChange {
-    return (
-        (obj !== null &&
-            typeof obj === "object" ||
-            typeof obj === "function") &&
-        obj.op === "mcm" &&
-        typeof obj.id === "number" &&
-        typeof obj.clk === "string" &&
-        typeof obj.pt === "number" &&
-        Array.isArray(obj.mc) &&
-        obj.mc.every((e: any) =>
-            (e !== null &&
-                typeof e === "object" ||
-                typeof e === "function") &&
-            typeof e.id === "string" &&
-            Array.isArray(e.rc) &&
-            e.rc.every((e: any) =>
-                (e !== null &&
-                    typeof e === "object" ||
-                    typeof e === "function") &&
-                typeof e.spf === "number"
-            )
-        )
-    )
-}
-
 export function isMarketTvChange(obj: any, _argumentName?: string): obj is MarketTvChange {
     return (
         (obj !== null &&
@@ -565,5 +200,171 @@ export function isMarketsChange(obj: any, _argumentName?: string): obj is Market
         typeof obj.clk === "string" &&
         typeof obj.pt === "number" &&
         Array.isArray(obj.mc)
+    )
+}
+
+export function isRunnersChange(obj: any, _argumentName?: string): obj is RunnersChange {
+    return (
+        (obj !== null &&
+            typeof obj === "object" ||
+            typeof obj === "function") &&
+        Array.isArray(obj.rc)
+    )
+}
+
+export function isRunnerAtbChange(obj: any, _argumentName?: string): obj is RunnerAtbChange {
+    return (
+        (obj !== null &&
+            typeof obj === "object" ||
+            typeof obj === "function") &&
+        typeof obj.id === "number" &&
+        Array.isArray(obj.atb) &&
+        obj.atb.every((e: any) =>
+            typeof e === "object"
+        )
+    )
+}
+
+export function isRunnerAtlChange(obj: any, _argumentName?: string): obj is RunnerAtlChange {
+    return (
+        (obj !== null &&
+            typeof obj === "object" ||
+            typeof obj === "function") &&
+        typeof obj.id === "number" &&
+        Array.isArray(obj.atl) &&
+        obj.atl.every((e: any) =>
+            typeof e === "object"
+        )
+    )
+}
+
+export function isRunnerBatbChange(obj: any, _argumentName?: string): obj is RunnerBatbChange {
+    return (
+        (obj !== null &&
+            typeof obj === "object" ||
+            typeof obj === "function") &&
+        typeof obj.id === "number" &&
+        Array.isArray(obj.batb) &&
+        obj.batb.every((e: any) =>
+            typeof e === "object"
+        )
+    )
+}
+
+export function isRunnerBatlChange(obj: any, _argumentName?: string): obj is RunnerBatlChange {
+    return (
+        (obj !== null &&
+            typeof obj === "object" ||
+            typeof obj === "function") &&
+        typeof obj.id === "number" &&
+        Array.isArray(obj.batl) &&
+        obj.batl.every((e: any) =>
+            typeof e === "object"
+        )
+    )
+}
+
+export function isRunnerBdatbChange(obj: any, _argumentName?: string): obj is RunnerBdatbChange {
+    return (
+        (obj !== null &&
+            typeof obj === "object" ||
+            typeof obj === "function") &&
+        typeof obj.id === "number" &&
+        Array.isArray(obj.bdatb) &&
+        obj.bdatb.every((e: any) =>
+            typeof e === "object"
+        )
+    )
+}
+
+export function isRunnerBdatlChange(obj: any, _argumentName?: string): obj is RunnerBdatlChange {
+    return (
+        (obj !== null &&
+            typeof obj === "object" ||
+            typeof obj === "function") &&
+        typeof obj.id === "number" &&
+        Array.isArray(obj.bdatl) &&
+        obj.bdatl.every((e: any) =>
+            typeof e === "object"
+        )
+    )
+}
+
+export function isRunnerTrdChange(obj: any, _argumentName?: string): obj is RunnerTrdChange {
+    return (
+        (obj !== null &&
+            typeof obj === "object" ||
+            typeof obj === "function") &&
+        typeof obj.id === "number" &&
+        Array.isArray(obj.trd) &&
+        obj.trd.every((e: any) =>
+            typeof e === "object"
+        )
+    )
+}
+
+export function isRunnerTvChange(obj: any, _argumentName?: string): obj is RunnerTvChange {
+    return (
+        (obj !== null &&
+            typeof obj === "object" ||
+            typeof obj === "function") &&
+        typeof obj.id === "number" &&
+        typeof obj.tv === "number"
+    )
+}
+
+export function isRunnerLtpChange(obj: any, _argumentName?: string): obj is RunnerLtpChange {
+    return (
+        (obj !== null &&
+            typeof obj === "object" ||
+            typeof obj === "function") &&
+        typeof obj.id === "number" &&
+        typeof obj.ltp === "number"
+    )
+}
+
+export function isRunnerSpbChange(obj: any, _argumentName?: string): obj is RunnerSpbChange {
+    return (
+        (obj !== null &&
+            typeof obj === "object" ||
+            typeof obj === "function") &&
+        typeof obj.id === "number" &&
+        Array.isArray(obj.spb) &&
+        obj.spb.every((e: any) =>
+            typeof e === "object"
+        )
+    )
+}
+
+export function isRunnerSplChange(obj: any, _argumentName?: string): obj is RunnerSplChange {
+    return (
+        (obj !== null &&
+            typeof obj === "object" ||
+            typeof obj === "function") &&
+        typeof obj.id === "number" &&
+        Array.isArray(obj.spl) &&
+        obj.spl.every((e: any) =>
+            typeof e === "object"
+        )
+    )
+}
+
+export function isRunnerSpnChange(obj: any, _argumentName?: string): obj is RunnerSpnChange {
+    return (
+        (obj !== null &&
+            typeof obj === "object" ||
+            typeof obj === "function") &&
+        typeof obj.id === "number" &&
+        typeof obj.spn === "number"
+    )
+}
+
+export function isRunnerSpfChange(obj: any, _argumentName?: string): obj is RunnerSpfChange {
+    return (
+        (obj !== null &&
+            typeof obj === "object" ||
+            typeof obj === "function") &&
+        typeof obj.id === "number" &&
+        typeof obj.spf === "number"
     )
 }
