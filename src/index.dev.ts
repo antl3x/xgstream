@@ -3,18 +3,15 @@
  * NOT PART OF THE PACKAGE DISTRIBUTION.
  */
 
+import * as $Account from '$Betfair/$Account';
+import * as $Stream from '$Betfair/$Stream';
 import dotenv from 'dotenv';
 import path from 'path';
-import {
-  createMarketsSubscription,
-  createStreamConnection,
-} from '@module/BetfairStream';
-import { doAuthentication } from '@module/BetfairAccount';
 
 async function init() {
   dotenv.config ({ path: path.resolve (process.cwd (), '.secrets/.env') });
 
-  const betfairAccount = await doAuthentication ({
+  const betfairAccount = await $Account.doAuthentication ({
     username: process.env.BETFAIR_USERNAME || '',
     password: process.env.BETFAIR_PASSWORD || '',
     apiKey: process.env.BETFAIR_API_KEY || '',
@@ -24,56 +21,28 @@ async function init() {
     },
   });
 
-  const marketsSub = createMarketsSubscription ({
-    enableMarketsRecording: {
-      folderPath: './data',
-    },
-  });
-
-  const streamConnection = createStreamConnection ({
+  const streamConnection = $Stream.$Connection.createConnection ({
     account: betfairAccount,
-    marketsSubscription: marketsSub,
-    logLevel: 'debug',
+    endpoint: 'LIVE',
+    logLevel: 'info',
   });
 
-  streamConnection.subscribeToMarkets ({
-    marketFilter: {
-      marketIds: ['1.178239869'],
-    },
+  const marketSub = $Stream.$MarketsSubscription.createMarketsSubscription ({
+    streamConnection,
     marketDataFilter: {
-      fields: [
-        'EX_ALL_OFFERS',
-        'EX_BEST_OFFERS',
-        'EX_BEST_OFFERS_DISP',
-        'EX_LTP',
-        'EX_TRADED',
-        'EX_TRADED_VOL',
-        'SP_PROJECTED',
-        'SP_TRADED',
-        'EX_MARKET_DEF',
-      ],
+      fields: [],
       ladderLevels: 10,
     },
+    marketFilter: {
+      eventTypeIds: ['7'],
+      marketTypes: ['WIN'],
+    },
+    customHandlers: {
+      beforeRunnerTrdChange: (i) => {
+        console.log (i.msg.trd);
+      },
+    },
   });
-
-  // streamConnection.subscribeToMarkets ({
-  //   marketFilter: {
-  //     eventTypeIds: ['7'],
-  //   },
-  //   marketDataFilter: {
-  //     fields: [
-  //       'EX_BEST_OFFERS_DISP',
-  //       'EX_BEST_OFFERS',
-  //       'EX_ALL_OFFERS',
-  //       'EX_MARKET_DEF',
-  //       'EX_TRADED',
-  //       'EX_TRADED_VOL',
-  //       'EX_LTP',
-  //       'SP_PROJECTED',
-  //     ],
-  //     ladderLevels: 10,
-  //   },
-  // });
 }
 
 process.on ('unhandledRejection', (up) => {

@@ -1,6 +1,6 @@
 {
   "name": "xgstream",
-  "version": "0.0.2",
+  "version": "1.0.0",
   "description": "xgStream is a Typescript library that enables algo trading and service connection with betting exchanges like Betfair.",
   "main": "cjs/index.js",
   "module": "esm/index.mjs",
@@ -42,8 +42,10 @@
     "@types/bunyan": "^1.8.6",
     "@types/jest": "^25.2.1",
     "@types/node-fetch": "^2.5.7",
+    "@types/struct": "^0.0.3",
     "@typescript-eslint/eslint-plugin": "^2.30.0",
     "@typescript-eslint/parser": "^2.30.0",
+    "@zerollup/ts-transform-paths": "^1.7.18",
     "benchmark": "^2.1.4",
     "dotenv": "^8.2.0",
     "eslint": "^6.8.0",
@@ -51,10 +53,12 @@
     "jest": "^25.5.3",
     "nodemon": "^2.0.4",
     "scripty": "^2.0.0",
+    "ts-auto-guard": "^1.0.0-alpha.21",
     "ts-jest": "^25.4.0",
     "ts-node": "^8.10.2",
     "tsc-watch": "^4.2.9",
     "tslib": "^2.0.0",
+    "ttypescript": "^1.5.12",
     "typescript": "^3.9.5"
   },
   "scripty": {
@@ -65,6 +69,7 @@
     "bunyan": "^1.8.15",
     "node-fetch": "^2.6.1",
     "ramda": "^0.27.0",
+    "struct": "^0.0.12",
     "super-ts": "^1.11.1"
   }
 }
