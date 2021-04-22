@@ -1,4 +1,4 @@
-import { doAuthentication, getAccountFunds } from '@module/BetfairAccount';
+import { doAuthentication, getAccountFunds } from '$Betfair/$Account';
 
 it ('Should pass with valid account credentials', async () => {
   const betfairAccount = await doAuthentication ({
