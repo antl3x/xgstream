@@ -1,2 +1,2 @@
-export { createConnection } from './createConnection';
-export { createMarketsSubscription } from './createMarketSubscription';
+export * as $Connection from './$Connection';
+export * as $MarketsSubscription from './$MarketsSubscription';

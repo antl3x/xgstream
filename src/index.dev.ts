@@ -3,11 +3,10 @@
  * NOT PART OF THE PACKAGE DISTRIBUTION.
  */
 
+import * as $Account from '$Betfair/$Account';
+import * as $Stream from '$Betfair/$Stream';
 import dotenv from 'dotenv';
 import path from 'path';
-
-import * as $Account from '$Betfair/$Account';
-import { createConnection, createMarketsSubscription } from '$Betfair/$Stream';
 
 async function init() {
   dotenv.config ({ path: path.resolve (process.cwd (), '.secrets/.env') });
@@ -22,61 +21,28 @@ async function init() {
     },
   });
 
-  const streamConnection = createConnection ({
+  const streamConnection = $Stream.$Connection.createConnection ({
     account: betfairAccount,
-    socketEndpoint: 'LIVE',
-    logLevel: 'error',
+    endpoint: 'LIVE',
+    logLevel: 'info',
   });
 
-  createMarketsSubscription ({
+  const marketSub = $Stream.$MarketsSubscription.createMarketsSubscription ({
     streamConnection,
     marketDataFilter: {
       fields: [],
       ladderLevels: 10,
     },
     marketFilter: {
-      marketIds: ['1.181732429'],
+      eventTypeIds: ['7'],
+      marketTypes: ['WIN'],
+    },
+    customHandlers: {
+      beforeRunnerTrdChange: (i) => {
+        console.log (i.msg.trd);
+      },
     },
   });
-
-  // streamConnection.subscribeToMarkets ({
-  //   marketFilter: {
-  //     marketIds: ['1.178239869'],
-  //   },
-  //   marketDataFilter: {
-  //     fields: [
-  //       'EX_ALL_OFFERS',
-  //       'EX_BEST_OFFERS',
-  //       'EX_BEST_OFFERS_DISP',
-  //       'EX_LTP',
-  //       'EX_TRADED',
-  //       'EX_TRADED_VOL',
-  //       'SP_PROJECTED',
-  //       'SP_TRADED',
-  //       'EX_MARKET_DEF',
-  //     ],
-  //     ladderLevels: 10,
-  //   },
-  // });
-
-  // streamConnection.subscribeToMarkets ({
-  //   marketFilter: {
-  //     eventTypeIds: ['7'],
-  //   },
-  //   marketDataFilter: {
-  //     fields: [
-  //       'EX_BEST_OFFERS_DISP',
-  //       'EX_BEST_OFFERS',
-  //       'EX_ALL_OFFERS',
-  //       'EX_MARKET_DEF',
-  //       'EX_TRADED',
-  //       'EX_TRADED_VOL',
-  //       'EX_LTP',
-  //       'SP_PROJECTED',
-  //     ],
-  //     ladderLevels: 10,
-  //   },
-  // });
 }
 
 process.on ('unhandledRejection', (up) => {

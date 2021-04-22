@@ -1,79 +1,60 @@
-export type MessageResponse =
-  | ConnectionSuccess
-  | ConnectionFailure
-  | AuthenticationSuccess
-  | MarketSubImage
-  | MarketReSubImage
-  | MarketHeartbeat
-  | MarketTvChange
-  | MarketDefinitionChange
-  | MarketLatency
-  | RunnerAtbChange
-  | RunnerAtlChange
-  | RunnerBatbChange
-  | RunnerBatlChange
-  | RunnerBdatbChange
-  | RunnerBdatlChange
-  | RunnerTrdChange
-  | RunnerTvChange
-  | RunnerLtpChange
-  | RunnerSplChange
-  | RunnerSpbChange
-  | RunnerSpnChange
-  | RunnerSpfChange;
+/* -------------------------------------------------------------------------- */
+/*                              MESSAGE REQUESTS                              */
+/* -------------------------------------------------------------------------- */
 
-//////////////////////////
-// Micro Message Types //
-////////////////////////
-
-/**
- * @see {isConnectionSuccess} ts-auto-guard:type-guard
- */
-export type ConnectionSuccess = {
-  op: 'connection';
-  connectionId: string;
-};
-
-/**
- * @see {isConnectionFailure} ts-auto-guard:type-guard
- */
-export type ConnectionFailure = {
-  op: 'status';
-  statusCode: 'FAILURE';
-  connectionId: string;
-  connectionClosed: true;
-  errorMessage: string;
-  errorCode:
-    | 'INVALID_INPUT'
-    | 'TIMEOUT'
-    | 'NO_APP_KEY'
-    | 'INVALID_APP_KEY'
-    | 'NO_SESSION'
-    | 'INVALID_SESSION_INFORMATION'
-    | 'NOT_AUTHORIZED'
-    | 'MAX_CONNECTION_LIMIT_EXCEEDED'
-    | 'TOO_MANY_REQUESTS'
-    | 'SUBSCRIPTION_LIMIT_EXCEEDED'
-    | 'INVALID_CLOCK'
-    | 'UNEXPECTED_ERROR'
-    | 'CONNECTION_FAILED';
-};
-
-/**
- * @see {isAuthenticationSuccess} ts-auto-guard:type-guard
- */
-export type AuthenticationSuccess = {
-  op: 'status';
+export type MARKET_SUBSCRIPTION_REQUEST = {
+  op: 'marketSubscription';
   id: number;
-  statusCode: 'SUCCESS';
-  connectionClosed: false;
-  connectionsAvailable: number;
+  segmentationEnabled?: boolean;
+  conflateMs?: number;
+  heartbeatMs?: number;
+  initialClk?: string;
+  clk?: string;
+  marketFilter: {
+    marketIds?: string[];
+    bspMarket?: boolean;
+    bettingTypes?: string[];
+    eventTypeIds?: string[];
+    eventIds?: string[];
+    turnInPlayEnabled?: boolean;
+    marketTypes?: string[];
+    venues?: string[];
+    countryCodes?: string[];
+    raceTypes?: string[];
+  };
+  marketDataFilter: {
+    fields: (
+      | 'EX_BEST_OFFERS_DISP'
+      | 'EX_BEST_OFFERS'
+      | 'EX_ALL_OFFERS'
+      | 'EX_TRADED'
+      | 'EX_TRADED_VOL'
+      | 'EX_LTP'
+      | 'EX_MARKET_DEF'
+      | 'SP_TRADED'
+      | 'SP_PROJECTED'
+    )[];
+    ladderLevels: 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10;
+  };
 };
+
+export const MARKET_SUBSCRIPTION_REQUEST = (
+  i: Omit<MARKET_SUBSCRIPTION_REQUEST, 'op'>
+): MARKET_SUBSCRIPTION_REQUEST => ({
+  op: 'marketSubscription',
+  ...i,
+});
+
+export type Requests = MARKET_SUBSCRIPTION_REQUEST;
+
+/* -------------------------------------------------------------------------- */
+/*                              MESSAGE RESPONSES                             */
+/* -------------------------------------------------------------------------- */
 
 /**
  * @see {isMarketHeartbeat} ts-auto-guard:type-guard
  */
-export type MarketHeartbeat = {
+export type MARKET_BEAT_RESPONSE = {
   op: 'mcm';
   id: number;
   clk: string;
@@ -84,7 +65,7 @@ export type MarketHeartbeat = {
 /**
  * @see {isMarketLatency} ts-auto-guard:type-guard
  */
-export type MarketLatency = {
+export type MARKET_LATENCY_RESPONSE = {
   op: 'mcm';
   status: 503;
 };
@@ -92,7 +73,7 @@ export type MarketLatency = {
 /**
  * @see {isMarketSubImage} ts-auto-guard:type-guard
  */
-export type MarketSubImage = {
+export type MARKET_SUBIMAGE_RESPONSE = {
   op: 'mcm';
   id: number;
   initialClk: string;
@@ -106,7 +87,7 @@ export type MarketSubImage = {
 /**
  * @see {isMarketReSubImage} ts-auto-guard:type-guard
  */
-export type MarketReSubImage = {
+export type MARKET_RESUBIMAGE_RESPONSE = {
   op: 'mcm';
   id: number;
   initialClk: string;
@@ -120,7 +101,7 @@ export type MarketReSubImage = {
 /**
  * @see {isMarketTvChange} ts-auto-guard:type-guard
  */
-export type MarketTvChange = {
+export type MARKET_TV_CHANGE_RESPONSE = {
   id: string;
   tv: number;
 };
@@ -128,7 +109,7 @@ export type MarketTvChange = {
 /**
  * @see {isMarketDefinitionChange} ts-auto-guard:type-guard
  */
-export type MarketDefinitionChange = {
+export type MARKET_DEFINITION_CHANGE_RESPONSE = {
   id: string;
   marketDefinition: {
     bspMarket: boolean;
@@ -182,7 +163,7 @@ export type MarketDefinitionChange = {
 /**
  * @see {isMarketsChange} ts-auto-guard:type-guard
  */
-export type MarketsChange = {
+export type MARKETS_CHANGE_RESPONSE = {
   op: 'mcm';
   id: number;
   clk: string;
@@ -193,14 +174,14 @@ export type MarketsChange = {
 /**
  * @see {isRunnersChange} ts-auto-guard:type-guard
  */
-export type RunnersChange = {
+export type RUNNERS_CHANGE_RESPONSE = {
   rc: any[];
 };
 
 /**
  * @see {isRunnerAtbChange} ts-auto-guard:type-guard
  */
-export type RunnerAtbChange = {
+export type RUNNER_ATB_CHANGE_RESPONSE = {
   id: number;
   atb: [number, number][];
 };
@@ -208,7 +189,7 @@ export type RunnerAtbChange = {
 /**
  * @see {isRunnerAtlChange} ts-auto-guard:type-guard
  */
-export type RunnerAtlChange = {
+export type RUNNER_ATL_CHANGE_RESPONSE = {
   id: number;
   atl: [number, number][];
 };
@@ -216,7 +197,7 @@ export type RunnerAtlChange = {
 /**
  * @see {isRunnerBatbChange} ts-auto-guard:type-guard
  */
-export type RunnerBatbChange = {
+export type RUNNER_BATB_CHANGE_RESPONSE = {
   id: number;
   batb: [number, number, number][];
 };
@@ -224,7 +205,7 @@ export type RunnerBatbChange = {
 /**
  * @see {isRunnerBatlChange} ts-auto-guard:type-guard
  */
-export type RunnerBatlChange = {
+export type RUNNER_BATL_CHANGE_RESPONSE = {
   id: number;
   batl: [number, number, number][];
 };
@@ -232,7 +213,7 @@ export type RunnerBatlChange = {
 /**
  * @see {isRunnerBdatbChange} ts-auto-guard:type-guard
  */
-export type RunnerBdatbChange = {
+export type RUNNER_BDATB_CHANGE_RESPONSE = {
   id: number;
   bdatb: [number, number, number][];
 };
@@ -240,7 +221,7 @@ export type RunnerBdatbChange = {
 /**
  * @see {isRunnerBdatlChange} ts-auto-guard:type-guard
  */
-export type RunnerBdatlChange = {
+export type RUNNER_BDATL_CHANGE_RESPONSE = {
   id: number;
   bdatl: [number, number, number][];
 };
@@ -248,7 +229,7 @@ export type RunnerBdatlChange = {
 /**
  * @see {isRunnerTrdChange} ts-auto-guard:type-guard
  */
-export type RunnerTrdChange = {
+export type RUNNER_TRD_CHANGE_RESPONSE = {
   id: number;
   trd: [number, number][];
 };
@@ -256,7 +237,7 @@ export type RunnerTrdChange = {
 /**
  * @see {isRunnerTvChange} ts-auto-guard:type-guard
  */
-export type RunnerTvChange = {
+export type RUNNER_TV_CHANGE_RESPONSE = {
   id: number;
   tv: number;
 };
@@ -264,7 +245,7 @@ export type RunnerTvChange = {
 /**
  * @see {isRunnerLtpChange} ts-auto-guard:type-guard
  */
-export type RunnerLtpChange = {
+export type RUNNER_LTP_CHANGE_RESPONSE = {
   id: number;
   ltp: number;
 };
@@ -272,7 +253,7 @@ export type RunnerLtpChange = {
 /**
  * @see {isRunnerSpbChange} ts-auto-guard:type-guard
  */
-export type RunnerSpbChange = {
+export type RUNNER_SPB_CHANGE_RESPONSE = {
   id: number;
   spb: [number, number][];
 };
@@ -280,7 +261,7 @@ export type RunnerSpbChange = {
 /**
  * @see {isRunnerSplChange} ts-auto-guard:type-guard
  */
-export type RunnerSplChange = {
+export type RUNNER_SPL_CHANGE_RESPONSE = {
   id: number;
   spl: [number, number][];
 };
@@ -288,7 +269,7 @@ export type RunnerSplChange = {
 /**
  * @see {isRunnerSpnChange} ts-auto-guard:type-guard
  */
-export type RunnerSpnChange = {
+export type RUNNER_SPN_CHANGE_RESPONSE = {
   id: number;
   spn: number;
 };
@@ -296,7 +277,31 @@ export type RunnerSpnChange = {
 /**
  * @see {isRunnerSpfChange} ts-auto-guard:type-guard
  */
-export type RunnerSpfChange = {
+export type RUNNER_SPF_CHANGE_RESPONSE = {
   id: number;
   spf: number;
 };
+
+export type Responses =
+  | MARKET_BEAT_RESPONSE
+  | MARKET_LATENCY_RESPONSE
+  | MARKET_SUBIMAGE_RESPONSE
+  | MARKET_RESUBIMAGE_RESPONSE
+  | MARKET_TV_CHANGE_RESPONSE
+  | MARKET_DEFINITION_CHANGE_RESPONSE
+  | RUNNERS_CHANGE_RESPONSE
+  | RUNNERS_CHANGE_RESPONSE
+  | RUNNERS_CHANGE_RESPONSE
+  | RUNNER_ATB_CHANGE_RESPONSE
+  | RUNNER_ATL_CHANGE_RESPONSE
+  | RUNNER_BATB_CHANGE_RESPONSE
+  | RUNNER_BATL_CHANGE_RESPONSE
+  | RUNNER_BDATB_CHANGE_RESPONSE
+  | RUNNER_BDATL_CHANGE_RESPONSE
+  | RUNNER_TRD_CHANGE_RESPONSE
+  | RUNNER_TV_CHANGE_RESPONSE
+  | RUNNER_LTP_CHANGE_RESPONSE
+  | RUNNER_SPB_CHANGE_RESPONSE
+  | RUNNER_SPL_CHANGE_RESPONSE
+  | RUNNER_SPN_CHANGE_RESPONSE
+  | RUNNER_SPF_CHANGE_RESPONSE;

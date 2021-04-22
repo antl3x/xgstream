@@ -1,59 +1,10 @@
 /*
- * Generated type guards for "MessageResponse.ts".
+ * Generated type guards for "Messages.ts".
  * WARNING: Do not manually change this file.
  */
-import { ConnectionSuccess, ConnectionFailure, AuthenticationSuccess, MarketHeartbeat, MarketLatency, MarketSubImage, MarketReSubImage, MarketTvChange, MarketDefinitionChange, MarketsChange, RunnersChange, RunnerAtbChange, RunnerAtlChange, RunnerBatbChange, RunnerBatlChange, RunnerBdatbChange, RunnerBdatlChange, RunnerTrdChange, RunnerTvChange, RunnerLtpChange, RunnerSpbChange, RunnerSplChange, RunnerSpnChange, RunnerSpfChange } from "./MessageResponse";
+import { MARKET_BEAT_RESPONSE, MARKET_LATENCY_RESPONSE, MARKET_SUBIMAGE_RESPONSE, MARKET_RESUBIMAGE_RESPONSE, MARKET_TV_CHANGE_RESPONSE, MARKET_DEFINITION_CHANGE_RESPONSE, MARKETS_CHANGE_RESPONSE, RUNNERS_CHANGE_RESPONSE, RUNNER_ATB_CHANGE_RESPONSE, RUNNER_ATL_CHANGE_RESPONSE, RUNNER_BATB_CHANGE_RESPONSE, RUNNER_BATL_CHANGE_RESPONSE, RUNNER_BDATB_CHANGE_RESPONSE, RUNNER_BDATL_CHANGE_RESPONSE, RUNNER_TRD_CHANGE_RESPONSE, RUNNER_TV_CHANGE_RESPONSE, RUNNER_LTP_CHANGE_RESPONSE, RUNNER_SPB_CHANGE_RESPONSE, RUNNER_SPL_CHANGE_RESPONSE, RUNNER_SPN_CHANGE_RESPONSE, RUNNER_SPF_CHANGE_RESPONSE } from "./Messages";
 
-export function isConnectionSuccess(obj: any, _argumentName?: string): obj is ConnectionSuccess {
-    return (
-        (obj !== null &&
-            typeof obj === "object" ||
-            typeof obj === "function") &&
-        obj.op === "connection" &&
-        typeof obj.connectionId === "string"
-    )
-}
-
-export function isConnectionFailure(obj: any, _argumentName?: string): obj is ConnectionFailure {
-    return (
-        (obj !== null &&
-            typeof obj === "object" ||
-            typeof obj === "function") &&
-        obj.op === "status" &&
-        obj.statusCode === "FAILURE" &&
-        typeof obj.connectionId === "string" &&
-        obj.connectionClosed === true &&
-        typeof obj.errorMessage === "string" &&
-        (obj.errorCode === "INVALID_INPUT" ||
-            obj.errorCode === "TIMEOUT" ||
-            obj.errorCode === "NO_APP_KEY" ||
-            obj.errorCode === "INVALID_APP_KEY" ||
-            obj.errorCode === "NO_SESSION" ||
-            obj.errorCode === "INVALID_SESSION_INFORMATION" ||
-            obj.errorCode === "NOT_AUTHORIZED" ||
-            obj.errorCode === "MAX_CONNECTION_LIMIT_EXCEEDED" ||
-            obj.errorCode === "TOO_MANY_REQUESTS" ||
-            obj.errorCode === "SUBSCRIPTION_LIMIT_EXCEEDED" ||
-            obj.errorCode === "INVALID_CLOCK" ||
-            obj.errorCode === "UNEXPECTED_ERROR" ||
-            obj.errorCode === "CONNECTION_FAILED")
-    )
-}
-
-export function isAuthenticationSuccess(obj: any, _argumentName?: string): obj is AuthenticationSuccess {
-    return (
-        (obj !== null &&
-            typeof obj === "object" ||
-            typeof obj === "function") &&
-        obj.op === "status" &&
-        typeof obj.id === "number" &&
-        obj.statusCode === "SUCCESS" &&
-        obj.connectionClosed === false &&
-        typeof obj.connectionsAvailable === "number"
-    )
-}
-
-export function isMarketHeartbeat(obj: any, _argumentName?: string): obj is MarketHeartbeat {
+export function isMarketHeartbeat(obj: any, _argumentName?: string): obj is MARKET_BEAT_RESPONSE {
     return (
         (obj !== null &&
             typeof obj === "object" ||
@@ -66,7 +17,7 @@ export function isMarketHeartbeat(obj: any, _argumentName?: string): obj is Mark
     )
 }
 
-export function isMarketLatency(obj: any, _argumentName?: string): obj is MarketLatency {
+export function isMarketLatency(obj: any, _argumentName?: string): obj is MARKET_LATENCY_RESPONSE {
     return (
         (obj !== null &&
             typeof obj === "object" ||
@@ -76,7 +27,7 @@ export function isMarketLatency(obj: any, _argumentName?: string): obj is Market
     )
 }
 
-export function isMarketSubImage(obj: any, _argumentName?: string): obj is MarketSubImage {
+export function isMarketSubImage(obj: any, _argumentName?: string): obj is MARKET_SUBIMAGE_RESPONSE {
     return (
         (obj !== null &&
             typeof obj === "object" ||
@@ -92,7 +43,7 @@ export function isMarketSubImage(obj: any, _argumentName?: string): obj is Marke
     )
 }
 
-export function isMarketReSubImage(obj: any, _argumentName?: string): obj is MarketReSubImage {
+export function isMarketReSubImage(obj: any, _argumentName?: string): obj is MARKET_RESUBIMAGE_RESPONSE {
     return (
         (obj !== null &&
             typeof obj === "object" ||
@@ -108,7 +59,7 @@ export function isMarketReSubImage(obj: any, _argumentName?: string): obj is Mar
     )
 }
 
-export function isMarketTvChange(obj: any, _argumentName?: string): obj is MarketTvChange {
+export function isMarketTvChange(obj: any, _argumentName?: string): obj is MARKET_TV_CHANGE_RESPONSE {
     return (
         (obj !== null &&
             typeof obj === "object" ||
@@ -118,7 +69,7 @@ export function isMarketTvChange(obj: any, _argumentName?: string): obj is Marke
     )
 }
 
-export function isMarketDefinitionChange(obj: any, _argumentName?: string): obj is MarketDefinitionChange {
+export function isMarketDefinitionChange(obj: any, _argumentName?: string): obj is MARKET_DEFINITION_CHANGE_RESPONSE {
     return (
         (obj !== null &&
             typeof obj === "object" ||
@@ -166,6 +117,8 @@ export function isMarketDefinitionChange(obj: any, _argumentName?: string): obj 
             typeof e.sortPriority === "number" &&
             (typeof e.removalDate === "undefined" ||
                 typeof e.removalDate === "string") &&
+            (typeof e.bsp === "undefined" ||
+                typeof e.bsp === "number") &&
             typeof e.id === "number"
         ) &&
         Array.isArray(obj.marketDefinition.regulators) &&
@@ -190,7 +143,7 @@ export function isMarketDefinitionChange(obj: any, _argumentName?: string): obj 
     )
 }
 
-export function isMarketsChange(obj: any, _argumentName?: string): obj is MarketsChange {
+export function isMarketsChange(obj: any, _argumentName?: string): obj is MARKETS_CHANGE_RESPONSE {
     return (
         (obj !== null &&
             typeof obj === "object" ||
@@ -199,11 +152,17 @@ export function isMarketsChange(obj: any, _argumentName?: string): obj is Market
         typeof obj.id === "number" &&
         typeof obj.clk === "string" &&
         typeof obj.pt === "number" &&
-        Array.isArray(obj.mc)
+        Array.isArray(obj.mc) &&
+        obj.mc.every((e: any) =>
+            (e !== null &&
+                typeof e === "object" ||
+                typeof e === "function") &&
+            typeof e.id === "string"
+        )
     )
 }
 
-export function isRunnersChange(obj: any, _argumentName?: string): obj is RunnersChange {
+export function isRunnersChange(obj: any, _argumentName?: string): obj is RUNNERS_CHANGE_RESPONSE {
     return (
         (obj !== null &&
             typeof obj === "object" ||
@@ -212,7 +171,7 @@ export function isRunnersChange(obj: any, _argumentName?: string): obj is Runner
     )
 }
 
-export function isRunnerAtbChange(obj: any, _argumentName?: string): obj is RunnerAtbChange {
+export function isRunnerAtbChange(obj: any, _argumentName?: string): obj is RUNNER_ATB_CHANGE_RESPONSE {
     return (
         (obj !== null &&
             typeof obj === "object" ||
@@ -225,7 +184,7 @@ export function isRunnerAtbChange(obj: any, _argumentName?: string): obj is Runn
     )
 }
 
-export function isRunnerAtlChange(obj: any, _argumentName?: string): obj is RunnerAtlChange {
+export function isRunnerAtlChange(obj: any, _argumentName?: string): obj is RUNNER_ATL_CHANGE_RESPONSE {
     return (
         (obj !== null &&
             typeof obj === "object" ||
@@ -238,7 +197,7 @@ export function isRunnerAtlChange(obj: any, _argumentName?: string): obj is Runn
     )
 }
 
-export function isRunnerBatbChange(obj: any, _argumentName?: string): obj is RunnerBatbChange {
+export function isRunnerBatbChange(obj: any, _argumentName?: string): obj is RUNNER_BATB_CHANGE_RESPONSE {
     return (
         (obj !== null &&
             typeof obj === "object" ||
@@ -251,7 +210,7 @@ export function isRunnerBatbChange(obj: any, _argumentName?: string): obj is Run
     )
 }
 
-export function isRunnerBatlChange(obj: any, _argumentName?: string): obj is RunnerBatlChange {
+export function isRunnerBatlChange(obj: any, _argumentName?: string): obj is RUNNER_BATL_CHANGE_RESPONSE {
     return (
         (obj !== null &&
             typeof obj === "object" ||
@@ -264,7 +223,7 @@ export function isRunnerBatlChange(obj: any, _argumentName?: string): obj is Run
     )
 }
 
-export function isRunnerBdatbChange(obj: any, _argumentName?: string): obj is RunnerBdatbChange {
+export function isRunnerBdatbChange(obj: any, _argumentName?: string): obj is RUNNER_BDATB_CHANGE_RESPONSE {
     return (
         (obj !== null &&
             typeof obj === "object" ||
@@ -277,7 +236,7 @@ export function isRunnerBdatbChange(obj: any, _argumentName?: string): obj is Ru
     )
 }
 
-export function isRunnerBdatlChange(obj: any, _argumentName?: string): obj is RunnerBdatlChange {
+export function isRunnerBdatlChange(obj: any, _argumentName?: string): obj is RUNNER_BDATL_CHANGE_RESPONSE {
     return (
         (obj !== null &&
             typeof obj === "object" ||
@@ -290,7 +249,7 @@ export function isRunnerBdatlChange(obj: any, _argumentName?: string): obj is Ru
     )
 }
 
-export function isRunnerTrdChange(obj: any, _argumentName?: string): obj is RunnerTrdChange {
+export function isRunnerTrdChange(obj: any, _argumentName?: string): obj is RUNNER_TRD_CHANGE_RESPONSE {
     return (
         (obj !== null &&
             typeof obj === "object" ||
@@ -303,7 +262,7 @@ export function isRunnerTrdChange(obj: any, _argumentName?: string): obj is Runn
     )
 }
 
-export function isRunnerTvChange(obj: any, _argumentName?: string): obj is RunnerTvChange {
+export function isRunnerTvChange(obj: any, _argumentName?: string): obj is RUNNER_TV_CHANGE_RESPONSE {
     return (
         (obj !== null &&
             typeof obj === "object" ||
@@ -313,7 +272,7 @@ export function isRunnerTvChange(obj: any, _argumentName?: string): obj is Runne
     )
 }
 
-export function isRunnerLtpChange(obj: any, _argumentName?: string): obj is RunnerLtpChange {
+export function isRunnerLtpChange(obj: any, _argumentName?: string): obj is RUNNER_LTP_CHANGE_RESPONSE {
     return (
         (obj !== null &&
             typeof obj === "object" ||
@@ -323,7 +282,7 @@ export function isRunnerLtpChange(obj: any, _argumentName?: string): obj is Runn
     )
 }
 
-export function isRunnerSpbChange(obj: any, _argumentName?: string): obj is RunnerSpbChange {
+export function isRunnerSpbChange(obj: any, _argumentName?: string): obj is RUNNER_SPB_CHANGE_RESPONSE {
     return (
         (obj !== null &&
             typeof obj === "object" ||
@@ -336,7 +295,7 @@ export function isRunnerSpbChange(obj: any, _argumentName?: string): obj is Runn
     )
 }
 
-export function isRunnerSplChange(obj: any, _argumentName?: string): obj is RunnerSplChange {
+export function isRunnerSplChange(obj: any, _argumentName?: string): obj is RUNNER_SPL_CHANGE_RESPONSE {
     return (
         (obj !== null &&
             typeof obj === "object" ||
@@ -349,7 +308,7 @@ export function isRunnerSplChange(obj: any, _argumentName?: string): obj is Runn
     )
 }
 
-export function isRunnerSpnChange(obj: any, _argumentName?: string): obj is RunnerSpnChange {
+export function isRunnerSpnChange(obj: any, _argumentName?: string): obj is RUNNER_SPN_CHANGE_RESPONSE {
     return (
         (obj !== null &&
             typeof obj === "object" ||
@@ -359,7 +318,7 @@ export function isRunnerSpnChange(obj: any, _argumentName?: string): obj is Runn
     )
 }
 
-export function isRunnerSpfChange(obj: any, _argumentName?: string): obj is RunnerSpfChange {
+export function isRunnerSpfChange(obj: any, _argumentName?: string): obj is RUNNER_SPF_CHANGE_RESPONSE {
     return (
         (obj !== null &&
             typeof obj === "object" ||

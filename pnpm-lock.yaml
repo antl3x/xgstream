@@ -3,6 +3,7 @@ dependencies:
   bunyan: 1.8.15
   node-fetch: 2.6.1
   ramda: 0.27.1
+  struct: 0.0.12
   super-ts: 1.11.1
 devDependencies:
   '@ef-carbon/tspm': 2.2.5_typescript@3.9.7
@@ -10,6 +11,7 @@ devDependencies:
   '@types/bunyan': 1.8.6
   '@types/jest': 25.2.3
   '@types/node-fetch': 2.5.7
+  '@types/struct': 0.0.3
   '@typescript-eslint/eslint-plugin': 2.34.0_5004700905763c91177aaa7d1d0d56ac
   '@typescript-eslint/parser': 2.34.0_eslint@6.8.0+typescript@3.9.7
   '@zerollup/ts-transform-paths': 1.7.18_typescript@3.9.7
@@ -704,6 +706,10 @@ packages:
     dev: true
     resolution:
       integrity: sha512-Y93R97Ouif9JEOWPIUyU+eyIdyRqQR0I8Ez1dzku4hDx34NWh4HbtIc3WNzwB1Y9ULvNGeu5B8h8bVL5cAk4/A==
+  /@types/node/14.14.41:
+    dev: true
+    resolution:
+      integrity: sha512-dueRKfaJL4RTtSa7bWeTK1M+VH+Gns73oCgzvYfHZywRCoPSd8EkXBL0mZ9unPTveBn+D9phZBaxuzpwjWkW0g==
   /@types/normalize-package-data/2.4.0:
     dev: true
     resolution:
@@ -730,6 +736,12 @@ packages:
     dev: true
     resolution:
       integrity: sha512-7NQmHra/JILCd1QqpSzl8+mJRc8ZHz3uDm8YV1Ks9IhK0epEiTw8aIErbvH9PI+6XbqhyIQy3462nEsn7UVzjQ==
+  /@types/struct/0.0.3:
+    dependencies:
+      '@types/node': 14.14.41
+    dev: true
+    resolution:
+      integrity: sha512-Sqs3Dv95exdr8R/DrcszIdR/BazkPHCyhYvZpQgiWv3l477kV5ghiubNpXysAIOBEmK41bMOjj7cStMQ+YGfyQ==
   /@types/yargs-parser/20.2.0:
     dev: true
     resolution:
@@ -5532,6 +5544,13 @@ packages:
       node: '>=8'
     resolution:
       integrity: sha512-6fPc+R4ihwqP6N/aIv2f1gMH8lOVtWQHoqC4yK6oSDVVocumAsfCqjkXnqiYMhmMwS/mEHLp7Vehlt3ql6lEig==
+  /struct/0.0.12:
+    dev: false
+    engines:
+      node: '>0.6.0'
+    resolution:
+      integrity: sha1-gzCvhyZk6aW9Z4ZkUkhXxQkIA4o=
+      tarball: struct/-/struct-0.0.12.tgz
   /super-ts/1.11.1:
     dependencies:
       '@types/ramda': 0.27.34
@@ -6306,6 +6325,7 @@ specifiers:
   '@types/jest': ^25.2.1
   '@types/node-fetch': ^2.5.7
   '@types/ramda': ^0.27.4
+  '@types/struct': ^0.0.3
   '@typescript-eslint/eslint-plugin': ^2.30.0
   '@typescript-eslint/parser': ^2.30.0
   '@zerollup/ts-transform-paths': ^1.7.18
@@ -6319,6 +6339,7 @@ specifiers:
   nodemon: ^2.0.4
   ramda: ^0.27.0
   scripty: ^2.0.0
+  struct: ^0.0.12
   super-ts: ^1.11.1
   ts-auto-guard: ^1.0.0-alpha.21
   ts-jest: ^25.4.0
